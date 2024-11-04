@@ -10,7 +10,10 @@ Para poder entender este curso debes de tener algunas nociones básicoas sobre H
 
 # Índice
 
-1. [Fundamentos de Maplibre: Estructura básica de un mapa](src/1.html)
-<kbd> <br> Explicación <br> </kbd>
-2. 
-3. [Escala y zoom](src/2.html)
+1. Fundamentos de Maplibre: Estructura básica de un mapa:
+- [Explicación](src/1.html)
+- [Resultado](src/1.html)
+
+2. Escala y zoom:
+- [Explicación](src/1.html)
+- [Resultado](src/1.html)
