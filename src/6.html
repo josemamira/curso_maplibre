@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Diferentes estilos (fondos) y control de navegación</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #mensaje {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="mensaje">
+        <h3>Añadir GeoJSON y simbolizar</h3>
+        <p><a
+                href="https://geoinnova.org/blog-territorio/maplibre-gl-js-crear-mapa-y-anadir-datos-desde-un-geojson/">Enlace</a>
+        </p>
+        <p>Crea un GeoJSON y simbolízalo</p>
+
+    </div>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',// Nuevo style
+            center: [-3.7, 40.41], // starting position [lng, lat] Madrid
+            zoom: 5 // starting zoom
+        });
+
+        // Agrega controles de zoom y rotación
+        map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+        map.on('load', function () {
+            map.addSource('punto_layer', {
+                type: 'geojson',
+                data: 'data/pois.geojson'
+            });
+
+            map.addLayer({
+                'id': 'punto_layer',
+                'type': 'circle',
+                'source': 'punto_layer',
+
+                'paint': {
+                    'circle-radius': 8,
+                    'circle-color': '#B42222'
+                },
+
+            });
+        });
+
+    </script>
+</body>
+
+</html>

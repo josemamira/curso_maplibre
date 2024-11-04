@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Símbolo graduado</title>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <!-- Script de MapLibre -->
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+    <style>
+        /* Estilo para que el mapa ocupe toda la pantalla */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #titulo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+
+
+
+
+
+        .legend span {
+            height: 10px;
+            width: 10px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
+    <div id="titulo">
+        <h3>Heatmap</h3>
+        <p>Símbolo graduado (temperatura</p>
+        <div id="legend" class="legend">
+            <div>
+                <h4>LEYENDA</h4>
+                <div><span style="background-color: #313695;"></span>8</div>
+                <div><span style="background-color: #4575b4;"></span>10</div>
+                <div><span style="background-color: #91bfdb;"></span>12</div>
+                <div><span style="background-color: #e0f3f8;"></span>14</div>
+                <div><span style="background-color: #fee090;"></span>16</div>
+                <div><span style="background-color: #fc8d59;"></span>18</div>
+                <div><span style="background-color: #d73027;"></span>20</div>
+                <div><span style="background-color: #a50026;"></span>22</div>
+                <div><span style="background-color: #4a0112;"></span>24</div>
+
+
+  
+
+            </div>
+
+
+        </div>
+
+
+        <script>
+            // Inicializa el mapa
+            const map = new maplibregl.Map({
+                container: 'map',
+                style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+                center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
+                zoom: 7,
+                hash: true
+            });
+
+
+            // Agrega una fuente GeoJSON
+            map.on('load', (e) => {
+
+                map.addSource('puntos', {
+                    type: 'geojson',
+                    data: 'data/0508_AVAMET.geojson'
+                });
+
+                // Agregar capa con símbolos graduados según la temperatura
+                map.addLayer({
+                    id: 'observatorios-layer',
+                    type: 'circle',
+                    source: 'puntos',
+                    minzoom: 7,
+                    paint: {
+                        'circle-radius': [
+                            "interpolate",
+                            ["linear"],
+                            ["get", "temperatura"],  // Basado en el campo "temp" de los datos
+                            8, 1,              // Tamaño mínimo para valor bajo
+                            16, 15,           // Tamaño medio
+                            24, 30,           // Tamaño máximo para valor alto
+                        ],
+                        'circle-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'temperatura'],
+                            8, '#313695',  // Azul oscuro para las temperaturas más frías
+                            10, '#4575b4',
+                            12, '#91bfdb',
+                            14, '#e0f3f8',
+                            16, '#fee090',
+                            18, '#fc8d59',
+                            20, '#d73027',
+                            22, '#a50026',
+                            24, '#4a0112'   // Rojo oscuro para las temperaturas más cálidas
+                        ],
+                        'circle-opacity': 0.8
+                    }
+                });
+                //fin addLayer
+
+            }); //on load
+
+
+
+            // Evento al hacer click
+            map.on('click', 'observatorios-layer', (e) => {
+                const coordinates = e.lngLat;
+                const nom = e.features[0].properties.nom;
+                const temp = e.features[0].properties.temp;
+                const prec = e.features[0].properties.prec;
+                const altitud = e.features[0].properties.altitud;
+                const vent_vel = e.features[0].properties.vent_vel;
+                const nomactualitzaciobre = e.features[0].properties.actualitzacio;
+                const foto = e.features[0].properties.webcam;
+
+
+                const popupTxt = '<h2>' + nom + '</h2>' +
+                    '<p><img src="' + foto + '" width=200></p>' +
+                    '<ul>' +
+                    '<li>Temperatura: ' + temp + '</li>' +
+                    '<li>Precipitación: ' + prec + '</li>' +
+                    '<li>Velocidad viento: ' + vent_vel + '</li>' +
+                    '<li>Altitud: ' + altitud + '</li>' +
+                    '<li>Fecha: ' + nomactualitzaciobre + '</li>' +
+                    '</ul>';
+
+
+                new maplibregl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(popupTxt)
+                    .addTo(map);
+            });
+
+            // Evento cuando estás encima del punto
+            map.on('mouseenter', 'observatorios-layer', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Evento cuando dejas el punto
+            map.on('mouseleave', 'observatorios-layer', () => {
+                map.getCanvas().style.cursor = '';
+            });
+
+
+
+        </script>
+</body>
+
+</html>

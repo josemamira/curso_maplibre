@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Contenedor con texto</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #mensaje {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="mensaje">
+        <h3>Información del Mapa</h3>
+        <p>Este es un mapa de ejemplo usando MapLibre que ocupa toda la pantalla, con este popup a la izquierda.</p>
+    </div>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json',// Nuevo style
+            center: [-3.7, 40.41], // starting position [lng, lat] Madrid
+            zoom: 5 // starting zoom
+        });
+        // Añadir marcador
+        const madrid = new maplibregl.Marker()
+            .setLngLat([-3.8196239, 40.4381311])
+            .addTo(map);
+        // Añadir texto
+
+    </script>
+</body>
+
+</html>

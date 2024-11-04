@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos en MapLibre con JSON</title>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        /* Estilo para que el mapa ocupe toda la pantalla */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+        #titulo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
+    <div id="titulo">
+        <h3>Eventos</h3>
+        <p>Eventos al hacer click, al situarte encima o separate del geojson</p>
+    </div>
+
+    <!-- Script de MapLibre -->
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+    <script>
+        // Inicializa el mapa
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+            center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
+            zoom: 7
+        });
+
+
+        // Agrega una fuente GeoJSON
+        map.on('load', (e) => {
+
+            map.addSource('puntos', {
+                type: 'geojson',
+                data: 'data/0508_AVAMET.geojson'
+            });
+            map.addLayer({
+                id: 'puntos-layer',
+                type: 'circle',
+                source: 'puntos',
+                paint: {
+                    'circle-radius': 12,
+                    'circle-color': '#ff0000'
+                }
+            });
+        });
+
+        // Evento al hacer click
+        map.on('click', 'puntos-layer', (e) => {
+            const coordinates = e.lngLat;
+            /*
+            "id": "18375511",
+            "tipus": "AVAMET",
+            "codi": "c01m091e01",
+            "altitud": "1074",
+            "nom": "Portell de Morella",
+            "urlmxo": "http://www.avamet.org/mxo_i.php?id=c01m091e01",
+            "webcam": "https://www.avamet.es/estacions/public_html/portell/webcam.jpg",
+            "actualitzacio": "2024-10-30T09:11:00+01:00",
+            "temp": "14.2",
+            "hrel": "93",
+            "vent_vel": "9.7",
+            "vent_dir": "109",
+            "vent_dir_360": "341",
+            "vent_max": "48.3",
+            "pres": "1016.9",
+            "prec": "18.2"
+            */
+            const nom = e.features[0].properties.nom;
+            const temp = e.features[0].properties.temp;
+            const prec = e.features[0].properties.prec;
+            const altitud = e.features[0].properties.altitud;
+            const vent_vel = e.features[0].properties.vent_vel;
+            const nomactualitzaciobre = e.features[0].properties.actualitzacio;
+            const foto = e.features[0].properties.webcam;
+
+
+            const popupTxt = '<h2>'+nom+'</h2>'+
+                '<p><img src="'+foto+'" width=200></p>'+
+                '<ul>'+
+                    '<li>Temperatura: '+temp+'</li>'+
+                    '<li>Precipitación: '+prec+'</li>'+
+                    '<li>Velocidad viento: '+vent_vel+'</li>'+
+                    '<li>Altitud: '+altitud+'</li>'+
+                    '<li>Fecha: '+nomactualitzaciobre+'</li>'+                    
+                '</ul>';
+
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(popupTxt)
+                .addTo(map);
+        });
+
+        // Evento cuando estás encima del punto
+        map.on('mouseenter', 'puntos-layer', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Evento cuando dejas el punto
+        map.on('mouseleave', 'puntos-layer', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+
+
+    </script>
+</body>
+
+</html>

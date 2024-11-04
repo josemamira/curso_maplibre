@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Diferentes estilos (fondos) y control de navegación</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@2.1.9/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #mensaje {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="mensaje">
+        <h3>Diferentes estilos (fondos)</h3>
+        <p><a href="https://medium.com/@go2garret/free-basemap-tiles-for-maplibre-18374fab60cb">Enlace</a></p>
+        <p>Prueba los siguientes estilos</p>
+        <p>
+        <ul>
+            <li><a href="https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json">Dark Matter</a></li>
+            <li><a href="https://basemaps.cartocdn.com/gl/dark-matter-nolabels-gl-style/style.json">Dark Matter No Labels</a></li>
+            <li><a href="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json">Positron</a></li>
+            <li><a href="https://basemaps.cartocdn.com/gl/positron-nolabels-gl-style/style.json">Positron No Labels</a></li>
+            <li><a href="https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json">Voyager</a></li>
+            <li><a href="https://basemaps.cartocdn.com/gl/voyager-nolabels-gl-style/style.json">Voyager No Labels</a></li>
+            <li><a href="https://raw.githubusercontent.com/go2garret/maps/main/src/assets/json/openStreetMap.json">openStreetMap</a></li>
+            <li><a href="https://raw.githubusercontent.com/go2garret/maps/main/src/assets/json/arcgis_hybrid.json">Arcgis hybrid basemap</a></li>
+        </ul>
+        </p>
+    </div>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',// Nuevo style
+            center: [-3.7, 40.41], // starting position [lng, lat] Madrid
+            zoom: 5 // starting zoom
+        });
+        
+        // Agrega controles de zoom y rotación
+        map.addControl(new maplibregl.NavigationControl(), 'top-right');
+        
+        // Añadir marcador
+        const madrid = new maplibregl.Marker()
+            .setLngLat([-3.8196239, 40.4381311])
+            .addTo(map);
+        // Añadir texto
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heatmap</title>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        /* Estilo para que el mapa ocupe toda la pantalla */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        #map {
+            width: 100%;
+            height: 100%;
+        }
+
+        #titulo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+
+
+
+
+
+        .legend span {
+            height: 10px;
+            width: 10px;
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
+    <div id="titulo">
+        <h3>Heatmap</h3>
+        <p>Temperatura graduada</p>
+        <div id="legend" class="legend">
+            <div>
+                <h4>LEYENDA</h4>
+                <div><span style="background-color: #313695;"></span>-10</div>
+                <div><span style="background-color: #4575b4;"></span>5</div>
+                <div><span style="background-color: #e0f3f8;"></span>10</div>
+                <div><span style="background-color: #fee090;"></span>15</div>
+                <div><span style="background-color: #fc8d59;"></span>20</div>
+                <div><span style="background-color: #d73027;"></span>25</div>
+                <div><span style="background-color: #a50026;"></span>30</div>
+                <div><span style="background-color: #4a0112;"></span>40</div>
+
+            </div>
+
+
+        </div>
+
+        <!-- Script de MapLibre -->
+        <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
+        <script>
+            // Inicializa el mapa
+            const map = new maplibregl.Map({
+                container: 'map',
+                style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+                center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
+                zoom: 7,
+                hash: true
+            });
+
+
+            // Agrega una fuente GeoJSON
+            map.on('load', (e) => {
+
+                map.addSource('puntos', {
+                    type: 'geojson',
+                    data: 'data/0508_AVAMET.geojson'
+                });
+
+                map.addLayer({
+                    id: 'temp-heat',
+                    type: 'heatmap',
+                    source: 'puntos',
+                    maxzoom: 12,
+                    /*
+                    paint: {
+
+                        // Increase the heatmap color weight weight by zoom level
+                        "heatmap-intensity": ["interpolate", ["linear"],
+                            ["zoom"], 1, 0, 16, 3],
+
+                        // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                        "heatmap-color": ["interpolate", ["linear"],
+                            ["heatmap-density"],
+                            0, "rgba(33,102,172,0)",
+                            0.2, "rgb(103,169,207)",
+                            0.5, "rgb(209,229,240)",
+                            0.8, "rgb(253,219,199)",
+                            0.9, "rgb(239,138,98)",
+                            1, "rgb(178,24,43)"],
+
+                        // Adjust the heatmap radius by zoom level
+                        "heatmap-radius": ["interpolate", ["linear"],
+                            ["zoom"], 0, 0, 12, 2.3, 15, 15],
+
+                        // Transition from heatmap to circle layer by zoom level
+                        "heatmap-opacity": ["interpolate", ["linear"],
+                            ["zoom"], 12, 1, 15, 0.7],
+                    }*/
+                    paint: {
+                        // Increase the heatmap weight based on frequency and property temmperature
+                        'heatmap-weight': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'temperatura'], 0, 0, 12, 1
+                        ],
+                        // Increase the heatmap color weight weight by zoom level
+                        // heatmap-intensity is a multiplier on top of heatmap-weight
+                        'heatmap-intensity': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'], 0, 1, 12, 3
+                        ],
+                        // Color ramp for heatmap.  Domain is 0 (low) to 1 (high).
+                        // Begin color ramp at 0-stop with a 0-transparency color
+                        // to create a blur-like effect.
+                        'heatmap-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['heatmap-density'],
+                            0, 'rgba(33,102,172,0)', // el 0 hace que sea transparente
+                            0.2, '#67A9CF',
+                            0.4, '#D1E5F0',
+                            0.6, '#FDDBC7',
+                            0.8, '#EF8A62',
+                            1, '#B2182B'
+                        ],
+                        // Adjust the heatmap radius by zoom level
+                        'heatmap-radius': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'], 0, 2, 12, 80
+                        ],
+                        // Transition from heatmap to circle layer by zoom level
+                        /*'heatmap-opacity': [
+                            'interpolate',
+                            ['linear'],
+                            ['zoom'], 7, 1, 12, 0
+                        ]*/
+                    }
+
+
+                }); //fin addLayer
+
+            }); //on load            
+
+
+
+        </script>
+</body>
+
+</html>

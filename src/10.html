@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Temático con iconos SVG</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="lib/maplibre-gl.js"></script>
+    <script src="lib/maplibre-gl-svg.js"></script>
+    <link href="lib/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+
+        #titulo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 250px;
+            padding: 15px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+            font-size: 16px;
+            z-index: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="mensaje">
+        <h3>Temático con iconos SVG</h3>
+        <p><a href="https://maplibre.org/maplibre-gl-js/docs/examples/popup-on-click/">Enlace</a>
+        </p>
+        <p>Crea un GeoJSON y simbolízalo</p>
+
+    </div>
+    <script>
+        var map = new maplibregl.Map({
+            container: 'map', // container id
+            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+            center: [-3.7, 40.41], // starting position [lng, lat] Madrid
+            zoom: 5 // starting zoom
+        });
+
+
+
+
+
+        // Agrega controles de zoom y rotación
+        map.addControl(new maplibregl.NavigationControl(), 'top-right');
+
+        map.on('load', function () {
+
+            // Añadir iconos personalizados
+
+            //Create a new instance of the SVG manager.
+            svgManager = new maplibregl.SvgManager(map);
+            //Load an SVG templated icon into the map.
+            svgManager.add('a', 'iconos/a.svg');
+            svgManager.add('b', 'iconos/b.svg');
+            svgManager.add('c', 'iconos/c.svg');
+            svgManager.add('aaa', 'iconos/aaa.svg');
+
+            map.addSource('pois', {
+                type: 'geojson',
+                data: 'data/pois.geojson'
+            });
+
+
+            // Añadir una capa de etiquetas
+            map.addLayer({
+                'id': 'pois-labels',
+                'type': 'symbol',
+                'source': 'pois',
+                //'minzoom': 8,
+                'layout': {
+                    'text-field': ['get', 'nombre'],
+                    'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                    //'text-offset': [0, 1.25],
+                    'text-offset': [0, 2],
+                    'text-anchor': 'top'
+                    //,'text-color': 'red'
+                },
+                'paint': {
+                    'text-color': 'white',
+                    'text-halo-color': 'seagreen',
+                    'text-halo-width': 2
+                }
+            });
+
+            // capa con svg
+            map.addLayer({
+                id: 'pois',
+                type: 'symbol',
+                source: 'pois',
+                //minzoom: 8,
+                layout: {
+                    'icon-image': [
+                        'match',
+                        ['get', 'icono'], // Aquí 'propiedad' es la propiedad en el GeoJSON que se clasifica
+                        'a', 'a', // Si el valor es 'valor1', usar 'icono-1'
+                        'b', 'b', // Si el valor es 'valor2', usar 'icono-2'
+                        'c', 'c', // Si el valor es 'valor1', usar 'icono-1'
+
+								/* else */ 'aa' // Valor por defecto si no hay coincidencia
+                    ],
+                    'icon-size': 0.75
+                }
+            });
+
+        });
+
+        // Evento al hacer click
+        map.on('click', 'pois', (e) => {
+            const coordinates = e.lngLat;
+
+            const nombre = e.features[0].properties.nombre;
+            const descripcion = e.features[0].properties.descripcion;           
+
+
+            const popupTxt = '<h2>' + nombre + '</h2>' +               
+                '<p>' + descripcion + '</p>';
+
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(popupTxt)
+                .addTo(map);
+        });
+
+        // Evento cuando estás encima del punto
+        map.on('mouseenter', 'puntos-layer', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Evento cuando dejas el punto
+        map.on('mouseleave', 'puntos-layer', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+    </script>
+</body>
+
+</html>
