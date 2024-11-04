@@ -56,7 +56,7 @@ Para empezar a trabajar con **MapLibre GL JS**, incluye la biblioteca en tu proy
 
 Agrega el siguiente código a tu archivo HTML dentro de la etiqueta `<head>`:
 
-```
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -120,11 +120,9 @@ const map = new maplibregl.Map({
 
 Puedes usar estilos prediseñados o cargar uno propio. Por ejemplo:
 
-javascript
-
-Copiar código
-
-``map.setStyle('https://demotiles.maplibre.org/style.json');``
+```js
+map.setStyle('https://demotiles.maplibre.org/style.json');
+```
 
 Si quieres un estilo personalizado, puedes crear uno en Maputnik o usar un archivo JSON con tus propias definiciones de estilo.
 
@@ -136,14 +134,12 @@ Si quieres un estilo personalizado, puedes crear uno en Maputnik o usar un archi
 
 Puedes escuchar eventos del mapa como `click`, `mousemove` o `zoom` para realizar acciones específicas:
 
-javascript
-
-Copiar código
-
-``map.on('click', (event) => {
+```js
+map.on('click', (event) => {
   const { lng, lat } = event.lngLat;
   console.log(`Se hizo clic en: ${lng}, ${lat}`);
-});`` 
+});
+``` 
 
 ----------
 
@@ -151,9 +147,7 @@ Copiar código
 
 Puedes cambiar la ubicación de la cámara y el nivel de zoom con métodos como `.flyTo()` o `.jumpTo()`.
 
-
-
-```
+```js
 map.flyTo({
   center: [-74.5, 40],
   zoom: 12
@@ -166,11 +160,7 @@ map.flyTo({
 
 MapLibre GL JS proporciona controles como el de zoom y el de geolocalización:
 
-javascript
-
-Copiar código
-
-```
+```js
 // Control de zoom
 map.addControl(new maplibregl.NavigationControl());
 
@@ -189,8 +179,7 @@ map.addControl(new maplibregl.GeolocateControl({
 
 ### Añadir una fuente GeoJSON
 
-
-```
+```js
 map.addSource('puntos', {
   type: 'geojson',
   data: {
@@ -215,7 +204,7 @@ map.addSource('puntos', {
 ### Añadir una capa
 
 
-```
+```js
 map.addLayer({
   id: 'puntos',
   type: 'circle',
@@ -232,14 +221,15 @@ map.addLayer({
 ## 8. Agregar marcadores y popups
 
 ### Marcadores
-```new maplibregl.Marker()
+```js
+new maplibregl.Marker()
   .setLngLat([-74.5, 40])
   .addTo(map);
 ```
 
 ### Popups
 
-```
+```js
 const popup = new maplibregl.Popup({ offset: 25 })
   .setLngLat([-74.5, 40])
   .setHTML('<h3>Hola</h3><p>Este es un popup de ejemplo.</p>')
@@ -252,11 +242,7 @@ const popup = new maplibregl.Popup({ offset: 25 })
 
 Para crear un tema, utiliza un editor como Maputnik para modificar estilos JSON. Puedes ajustar colores, texturas, y elementos visuales como carreteras y edificios, y luego exportar el JSON y usarlo como tu `style`.
 
-javascript
-
-Copiar código
-
-```
+```js
 map.setStyle('ruta/a/tu/archivo-estilo.json');
 ```
 
