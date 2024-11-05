@@ -5,8 +5,7 @@
   <meta charset="UTF-8">
   <title>MapLibre Filtering Example</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="lib/maplibre-gl.js"></script>    
-  <link href="lib/maplibre-gl.css" rel="stylesheet" />
+  <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet" />
   <style>
     #map {
       position: absolute;
@@ -56,13 +55,13 @@
     </select>
   </div>
 
- 
+  <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
   <script>
     // Inicializar el mapa
     const map = new maplibregl.Map({
       container: 'map',
       style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
-      center: [-0.405,39.43],
+      center: [-0.405, 39.43],
       zoom: 12,
       hash: true
     });
@@ -95,7 +94,7 @@
       });
     });
 
-    // Funci�n para actualizar el filtro
+    // Función para actualizar el filtro
     function updateFilter() {
       const selectedCategory = document.getElementById("help_type").value;
       const selectedPriority = document.getElementById("urgency").value;
@@ -118,6 +117,45 @@
     // Escuchar cambios en los selectores
     document.getElementById("help_type").addEventListener("change", updateFilter);
     document.getElementById("urgency").addEventListener("change", updateFilter);
+
+
+    // Información
+    // Evento al hacer click
+    map.on('click', 'points-layer', (e) => {
+      const coordinates = e.lngLat;
+      const name = e.features[0].properties.name;
+      const location = e.features[0].properties.location;
+      const description = e.features[0].properties.description;
+      const number_of_people = e.features[0].properties.number_of_people;
+      const help_type = e.features[0].properties.help_type;
+      const contact_info = e.features[0].properties.contact_info;
+
+
+      const popupTxt = '<h2>' + name + '</h2>' +
+        '<ul>' +
+        '<li>Tipo ayuda: <b>' + help_type + '</b></li>' +
+        '<li>Ubicación: ' + location + '</li>' +
+        '<li>Decripción: ' + description + '</li>' +
+        '<li>Nº personas solicitadas: ' + number_of_people + '</li>' +
+        '<li>Información de contacto: ' + contact_info + '</li>' +
+        '</ul>';
+
+
+      new maplibregl.Popup()
+        .setLngLat(coordinates)
+        .setHTML(popupTxt)
+        .addTo(map);
+    });
+
+    // Evento cuando estás encima del punto
+    map.on('mouseenter', 'points-layer', () => {
+      map.getCanvas().style.cursor = 'pointer';
+    });
+
+    // Evento cuando dejas el punto
+    map.on('mouseleave', 'points-layer', () => {
+      map.getCanvas().style.cursor = '';
+    });
 
   </script>
 
