@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>MapLibre Filtering Example</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="lib/maplibre-gl.js"></script>    
+  <link href="lib/maplibre-gl.css" rel="stylesheet" />
+  <style>
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
+    .controls {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      z-index: 1;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="map"></div>
+  <div class="controls">
+    <label for="help_type">Tipo de ayuda:</label>
+    <select id="help_type">
+      <option value="">Todas</option>
+      <option value="alojamiento">alojamiento</option>
+      <option value="distribucion">distribucion</option>
+      <option value="evacuacion">evacuacion</option>
+      <option value="limpieza">limpieza</option>
+      <option value="logistico">logistico</option>
+      <option value="psicologico">psicologico</option>
+      <option value="rescate">rescate</option>
+      <!--<option value="evacuacion">C</option>
+      <option value="evacuacion">C</option>
+      <option value="evacuacion">C</option>-->
+
+    </select>
+
+    <label for="urgency">urgencia:</label>
+    <select id="urgency">
+      <option value="">Todas</option>
+      <option value="alta">alta</option>
+      <option value="media">media</option>
+      <option value="baja">baja</option>
+    </select>
+  </div>
+
+ 
+  <script>
+    // Inicializar el mapa
+    const map = new maplibregl.Map({
+      container: 'map',
+      style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+      center: [-0.405,39.43],
+      zoom: 12,
+      hash: true
+    });
+
+    // GeoJSON de puntos con categorías y prioridades
+
+    // Agregar fuente y capa de puntos
+    map.on('load', () => {
+      map.addSource('dana', {
+        type: 'geojson',
+        data: 'data/dana.geojson'
+      });
+
+      map.addLayer({
+        "id": "points-layer",
+        "type": "circle",
+        "source": "dana",
+        "paint": {
+          "circle-radius": 6,
+          //"circle-color": "#007cbf"
+          'circle-color': [
+            'match',
+            ['get', 'urgency'],
+            'alta', '#ff0000',
+            'media', '#ffff00',
+            'baja', '#00ff00',
+            '#ff0000' // resto valores
+          ]
+        }
+      });
+    });
+
+    // Funci�n para actualizar el filtro
+    function updateFilter() {
+      const selectedCategory = document.getElementById("help_type").value;
+      const selectedPriority = document.getElementById("urgency").value;
+
+      const filters = ["all"];
+
+      // Filtrar por categor�a si se seleccion� alguna
+      if (selectedCategory) {
+        filters.push(["==", ["get", "help_type"], selectedCategory]);
+      }
+
+      // Filtrar por prioridad si se seleccion� alguna
+      if (selectedPriority) {
+        filters.push(["==", ["get", "urgency"], selectedPriority]);
+      }
+
+      map.setFilter("points-layer", filters.length > 1 ? filters : null);
+    }
+
+    // Escuchar cambios en los selectores
+    document.getElementById("help_type").addEventListener("change", updateFilter);
+    document.getElementById("urgency").addEventListener("change", updateFilter);
+
+  </script>
+
+</body>
+
+</html>
