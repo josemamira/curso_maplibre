@@ -11,11 +11,11 @@ Para poder entender este curso debes de tener algunas nociones básicoas sobre H
 # Índice
 
 1. Fundamentos de Maplibre: Estructura básica de un mapa:
-- [Explicación](src/1_txt.html)
+- [Explicación](src/1.md)
 - [Resultado](src/1.html)
 
 2. Escala y zoom:
-- [Explicación](src/2_txt.html)
+- [Explicación](src/2.md)
 - [Resultado](src/2.html)
 
 # Curso de MapLibre GL JS
