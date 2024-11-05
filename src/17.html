@@ -129,13 +129,15 @@
       const number_of_people = e.features[0].properties.number_of_people;
       const help_type = e.features[0].properties.help_type;
       const contact_info = e.features[0].properties.contact_info;
+      const municipio = e.features[0].properties.municipio;
 
 
       const popupTxt = '<h2>' + name + '</h2>' +
+        '<p>'+ description + '</p>'+
         '<ul>' +
         '<li>Tipo ayuda: <b>' + help_type + '</b></li>' +
         '<li>Ubicación: ' + location + '</li>' +
-        '<li>Decripción: ' + description + '</li>' +
+        '<li>Municipio: ' + municipio + '</li>' +
         '<li>Nº personas solicitadas: ' + number_of_people + '</li>' +
         '<li>Información de contacto: ' + contact_info + '</li>' +
         '</ul>';
