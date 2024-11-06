@@ -6,12 +6,28 @@ Si quieres leer más sobre **teselas vectoriales** te recomiendo que leas este m
 
 [Taller Vector Tiles de Geoinquietos](https://geoinquiets.github.io/taller-vt/)
 
-Para poder entender este curso debes de tener algunas nociones básicoas sobre HTML y JavaScript. Sí ya las tienes ya puedes empezar
+Para poder entender este curso debes de tener algunas nociones básicas sobre HTML y JavaScript. Sí ya las tienes ya puedes empezar
 
 # Índice
 
 1. Fundamentos de Maplibre: Estructura básica de un mapa: [Explicación](src/1.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/1.html)
 2. Escala y zoom: [Explicación](src/2.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/2.html))
+3. Cambio de fondo: [Explicación](src/3.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/3.html))
+4. Añadir contenedores (ej. título): [Explicación](src/4.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/4.html))
+5. Listado de mapas de fondo: [Explicación](src/5.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/5.html))
+6. Añadir una capa GeoJSON: [Explicación](src/6.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/6.html))
+7. Manejar eventos: [Explicación](src/7.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/7.html)
+8. Simbolización cualitativa (categorías): [Explicación](src/8.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/8.html))
+9. Simbolización cuantitativa (intervalos de clase): [Explicación](src/9.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/9.html))
+10. Simbología puntual en SVG (plugin): [Explicación](src/10.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/10.html))
+11. Mapa de coropletas en polígonos: [Explicación](src/11.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/11.html))
+12. Mapa de coropletas en polígonos sobre campo calculado en tiempo real: [Explicación](src/12.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/12.html))
+13. Extrusión de geometrías (polígonos): [Explicación](src/13.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/13.html)
+14. Mapa de calor (heatmap) : [Explicación](src/14.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/14.html))
+15. Símbolo graduado: [Explicación](src/15.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/15.html))
+16. Agrupamiento (clustering) de puntos: [Explicación](src/16.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/16.html))
+17. Filtrado de datos (dana): [Explicación](src/17.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/17.html))
+
 
 # Curso de MapLibre GL JS
 
