@@ -10,8 +10,8 @@ Para poder entender este curso debes de tener algunas nociones básicoas sobre H
 
 # Índice
 
-1. Fundamentos de Maplibre: Estructura básica de un mapa: [Explicación](src/1.md) [Resultado](josemamira.github.io/curso_maplibre/src/1.html)
-2. Escala y zoom: [Explicación](src/2.md) [Resultado](josemamira.github.io/curso_maplibre/src/1.html)
+1. Fundamentos de Maplibre: Estructura básica de un mapa: [Explicación](src/1.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/1.html)
+2. Escala y zoom: [Explicación](src/2.md) [Resultado](j[osemamira.github.io/curso_maplibre/src/1.html](https://josemamira.github.io/curso_maplibre/src/2.html))
 
 # Curso de MapLibre GL JS
 
