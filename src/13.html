@@ -70,8 +70,11 @@
             const map = new maplibregl.Map({
                 container: 'map',
                 style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
-                center: [-0.57, 38.37], // Coordenadas iniciales [longitud, latitud] Valencia
-                zoom: 8,
+                center: [-0.477, 38.37], // Coordenadas iniciales [longitud, latitud] Alicante                
+                zoom: 9,
+                bearing: 50,
+                speed: 0.2, // make the flying slow   
+                curve: 1,
                 hash: true
             });
 
