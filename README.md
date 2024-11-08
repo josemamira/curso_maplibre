@@ -25,10 +25,11 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 13. Extrusión de geometrías (polígonos): [Explicación](src/13.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/13.html)
 14. Mapa de calor (heatmap) : [Explicación](src/14.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/14.html)
 15. Símbolo graduado: [Explicación](src/15.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/15.html)
+    
 15bis. Símbolo graduado clásico (Dana 29 octubre 2024): [Explicación](15.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/15bis.html)
 
-16. Agrupamiento (clustering) de puntos: [Explicación](src/16.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/16.html)
-17. Filtrado de datos (dana): [Explicación](src/17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
+17. Agrupamiento (clustering) de puntos: [Explicación](src/16.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/16.html)
+18. Filtrado de datos (dana): [Explicación](src/17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
 
 
 # Curso de MapLibre GL JS
