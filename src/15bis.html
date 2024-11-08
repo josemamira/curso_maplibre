@@ -144,6 +144,23 @@
             });
             //fin addLayer
 
+            map.addLayer({
+                id: 'observatorios-layer2',
+                type: 'circle',
+                source: 'puntos',
+                maxzoom: 7,
+
+                paint: {
+                    'circle-radius': 2,
+                    'circle-color': '#0074D9'
+                },
+
+            });
+
+
+
+
+
         }); //on load
 
 
