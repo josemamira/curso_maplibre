@@ -36,41 +36,43 @@
             font-size: 16px;
             z-index: 1;
         }
-    /* Estilo para cada ítem en la leyenda */
-    .legend-item {
-      display: flex;
-      align-items: center;
-      margin-bottom: 5px;
-    }
 
-    /* Estilos de los círculos para la leyenda */
-    .circle {
-      border-radius: 50%;
-      background-color: rgba(0, 123, 255, 0.7); /* Color de los círculos */
-      display: inline-block;
-      margin-right: 10px;
-    }
+        /* Estilo para cada ítem en la leyenda */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+        }
 
-    /* Tamaños de los círculos */
-    .circle-small {
-      width: 10px;
-      height: 10px;
-    }
+        /* Estilos de los círculos para la leyenda */
+        .circle {
+            border-radius: 50%;
+            background-color: rgba(0, 123, 255, 0.7);
+            /* Color de los círculos */
+            display: inline-block;
+            margin-right: 10px;
+        }
 
-    .circle-medium {
-      width: 20px;
-      height: 20px;
-    }
+        /* Tamaños de los círculos */
+        .circle-small {
+            width: 10px;
+            height: 10px;
+        }
 
-    .circle-large {
-      width: 30px;
-      height: 30px;
-    }
+        .circle-medium {
+            width: 20px;
+            height: 20px;
+        }
 
-    .circle-xlarge {
-      width: 40px;
-      height: 40px;
-    }
+        .circle-large {
+            width: 30px;
+            height: 30px;
+        }
+
+        .circle-xlarge {
+            width: 40px;
+            height: 40px;
+        }
     </style>
 </head>
 
@@ -79,115 +81,115 @@
     <div id="map"></div>
     <div id="titulo">
         <h3>Leyenda</h3>
-        
-    <div class="legend-item">
-      <div class="circle circle-small"></div>
-      <span>0 - 100</span>
+
+        <div class="legend-item">
+            <div class="circle circle-small"></div>
+            <span>0 - 100</span>
+        </div>
+
+        <div class="legend-item">
+            <div class="circle circle-medium"></div>
+            <span>101 - 500</span>
+        </div>
+
+        <div class="legend-item">
+            <div class="circle circle-large"></div>
+            <span>501 - 1000</span>
+        </div>
+
+        <div class="legend-item">
+            <div class="circle circle-xlarge"></div>
+            <span>1001+</span>
+        </div>
     </div>
 
-    <div class="legend-item">
-      <div class="circle circle-medium"></div>
-      <span>101 - 500</span>
-    </div>
+    <script>
+        // Inicializa el mapa
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+            center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
+            zoom: 7,
+            hash: true
+        });
 
-    <div class="legend-item">
-      <div class="circle circle-large"></div>
-      <span>501 - 1000</span>
-    </div>
+        // Agrega una fuente GeoJSON
+        map.on('load', (e) => {
 
-    <div class="legend-item">
-      <div class="circle circle-xlarge"></div>
-      <span>1001+</span>
-    </div>
-  </div>
-
-        <script>
-            // Inicializa el mapa
-            const map = new maplibregl.Map({
-                container: 'map',
-                style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
-                center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
-                zoom: 7,
-                hash: true
+            map.addSource('puntos', {
+                type: 'geojson',
+                data: 'data/dana_2024_10_29.geojson'
             });
 
-            // Agrega una fuente GeoJSON
-            map.on('load', (e) => {
-
-                map.addSource('puntos', {
-                    type: 'geojson',
-                    data: 'data/0508_AVAMET.geojson'
-                });
-
-                // Agregar capa con símbolos graduados según la temperatura
-                map.addLayer({
-                    id: 'observatorios-layer',
-                    type: 'circle',
-                    source: 'puntos',
-                    minzoom: 7,
-                    paint: {
-                        'circle-radius': [
-                            "interpolate",
-                            ["linear"],
-                            ["get", "temperatura"],  // Basado en el campo "temp" de los datos
-                            8, 1,              // Tamaño mínimo para valor bajo
-                            16, 30,           // Tamaño medio
-                            24, 60,           // Tamaño máximo para valor alto
-                        ],
-                        'circle-color': '#0074D9',
-                        'circle-stroke-color': 'white', 
-                        'circle-stroke-width': 1,
-                        'circle-opacity': 0.8
-                    }
-                });
-                //fin addLayer
-
-            }); //on load
-
-
-
-            // Evento al hacer click
-            map.on('click', 'observatorios-layer', (e) => {
-                const coordinates = e.lngLat;
-                const nom = e.features[0].properties.nom;
-                const temp = e.features[0].properties.temp;
-                const prec = e.features[0].properties.prec;
-                const altitud = e.features[0].properties.altitud;
-                const vent_vel = e.features[0].properties.vent_vel;
-                const nomactualitzaciobre = e.features[0].properties.actualitzacio;
-                const foto = e.features[0].properties.webcam;
-
-
-                const popupTxt = '<h2>' + nom + '</h2>' +
-                    '<p><img src="' + foto + '" width=200></p>' +
-                    '<ul>' +
-                    '<li>Temperatura: ' + temp + '</li>' +
-                    '<li>Precipitación: ' + prec + '</li>' +
-                    '<li>Velocidad viento: ' + vent_vel + '</li>' +
-                    '<li>Altitud: ' + altitud + '</li>' +
-                    '<li>Fecha: ' + nomactualitzaciobre + '</li>' +
-                    '</ul>';
-
-
-                new maplibregl.Popup()
-                    .setLngLat(coordinates)
-                    .setHTML(popupTxt)
-                    .addTo(map);
+            // Agregar capa con símbolos graduados según la temperatura
+            map.addLayer({
+                id: 'observatorios-layer',
+                type: 'circle',
+                source: 'puntos',
+                minzoom: 7,
+                paint: {
+                    'circle-radius': [
+                        "interpolate",
+                        ["linear"],
+                        ["get", "PREC"],  // Basado en el campo "temp" de los datos
+                        1, 1,              // Tamaño mínimo para valor bajo
+                        325, 30,           // Tamaño medio
+                        650, 60,           // Tamaño máximo para valor alto
+                    ],
+                    'circle-color': '#0074D9',
+                    'circle-stroke-color': 'white',
+                    'circle-stroke-width': 1,
+                    'circle-opacity': 0.8
+                }
             });
+            //fin addLayer
 
-            // Evento cuando estás encima del punto
-            map.on('mouseenter', 'observatorios-layer', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            // Evento cuando dejas el punto
-            map.on('mouseleave', 'observatorios-layer', () => {
-                map.getCanvas().style.cursor = '';
-            });
+        }); //on load
 
 
 
-        </script>
+        // Evento al hacer click
+        map.on('click', 'observatorios-layer', (e) => {
+            const coordinates = e.lngLat;
+            const nom = e.features[0].properties.ESTACION;
+            const temp = e.features[0].properties.TMAX;
+            const prec = e.features[0].properties.PREC;
+            const altitud = e.features[0].properties.altitud;
+            const vent_vel = e.features[0].properties.VMAX;
+            const nomactualitzaciobre = e.features[0].properties.actualitzacio;
+            const foto = e.features[0].properties.webcam;
+
+
+            const popupTxt = '<h2>' + nom + '</h2>' +
+                '<p><img src="' + foto + '" width=200></p>' +
+                '<ul>' +
+                '<li>Temperatura: ' + temp + '</li>' +
+                '<li>Precipitación: ' + prec + '</li>' +
+                '<li>Velocidad viento: ' + vent_vel + '</li>' +
+                '<li>Altitud: ' + altitud + '</li>' +
+                '<li>Fecha: ' + nomactualitzaciobre + '</li>' +
+                '</ul>';
+
+
+            new maplibregl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(popupTxt)
+                .addTo(map);
+        });
+
+        // Evento cuando estás encima del punto
+        map.on('mouseenter', 'observatorios-layer', () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        // Evento cuando dejas el punto
+        map.on('mouseleave', 'observatorios-layer', () => {
+            map.getCanvas().style.cursor = '';
+        });
+
+
+
+    </script>
 </body>
 
 </html>
