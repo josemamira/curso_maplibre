@@ -110,6 +110,12 @@ También hemos añadido una capa con las etiquetas del nombre del observatorio v
 ### Personalizar la etiqueta
 
 Fíjate bien que hemos concatendo en la etiqueta el nombre del observatorio, y en la línea de abajo las precipitación pero en forma de entero (round)
+
+Ejemplo:
+
+**Turis-Campañar**
+**641**
+
 ```js
 'text-field':['concat',['get', 'nom'], '\n', ["to-string", ['round', ['get', 'PREC']]] ],
 ```
