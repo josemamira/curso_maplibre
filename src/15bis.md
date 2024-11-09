@@ -366,7 +366,7 @@ El código completo lo tiene aquí:
 
 </html>
 ```
-Resultado: [enlace](https://josemamira.github.io/curso_maplibre/src/15.html)
+Resultado: [enlace](https://josemamira.github.io/curso_maplibre/src/15bis.html)
 
 Siguiente página: [enlace](16.md)
 
