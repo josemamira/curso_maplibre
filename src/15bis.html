@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -55,23 +56,23 @@
 
         /* Tamaños de los círculos */
         .circle-small {
-            width: 10px;
-            height: 10px;
+            width: 18px;
+            height: 18px;
         }
 
         .circle-medium {
-            width: 20px;
-            height: 20px;
+            width: 37px;
+            height: 37px;
         }
 
         .circle-large {
-            width: 30px;
-            height: 30px;
+            width: 75px;
+            height: 75px;
         }
 
         .circle-xlarge {
-            width: 40px;
-            height: 40px;
+            width: 120px;
+            height: 120px;
         }
     </style>
 </head>
@@ -81,27 +82,31 @@
     <div id="map"></div>
     <div id="titulo">
         <h3>Leyenda</h3>
+        <h4>Precipitación (mm)</h4>
+        <p>Dana 29-oct-2024</p>
+        <p>Fuente: AVAMET</p>
 
         <div class="legend-item">
             <div class="circle circle-small"></div>
-            <span>0 - 100</span>
+            <span>100</span>
         </div>
 
         <div class="legend-item">
             <div class="circle circle-medium"></div>
-            <span>101 - 500</span>
+            <span>200</span>
         </div>
 
         <div class="legend-item">
             <div class="circle circle-large"></div>
-            <span>501 - 1000</span>
+            <span>400</span>
         </div>
 
         <div class="legend-item">
             <div class="circle circle-xlarge"></div>
-            <span>1001+</span>
+            <span>600+</span>
         </div>
     </div>
+    
 
     <script>
         // Inicializa el mapa
@@ -156,6 +161,30 @@
                 },
 
             });
+
+             // Añadir una capa de etiquetas
+             map.addLayer({
+                    'id': 'pois_label',
+                    'type': 'symbol',
+                    'source': 'puntos',
+                    'minzoom': 10,
+                    'layout': {
+                        //'text-field':['concat', 'Hello, ', ['get', 'PREC']],
+                        'text-field':['concat',['get', 'nom'], '\n', ["to-string", ['round', ['get', 'PREC']]] ],
+                        //'text-field': ['get', 'PREC'],
+                        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                        //'text-offset': [0, 1.25],
+                        'text-offset': [0, 2],
+                        'text-anchor': 'top'
+                        //'text-color': 'red'
+                    },
+                    'paint': {
+                        'text-color': '#0074D9',
+                        'text-halo-color': 'white',
+                        'text-halo-width': 2
+                    }
+                });
+
 
 
 
