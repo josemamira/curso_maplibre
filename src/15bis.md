@@ -113,7 +113,7 @@ Fíjate bien que hemos concatendo en la etiqueta el nombre del observatorio, y e
 
 Ejemplo:
 
-**Turis-Campañar**
+**Turis-Canyapar**
 
 **641**
 
