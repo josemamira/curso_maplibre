@@ -18,8 +18,6 @@ Código fuente de los mapas realizados con Maplibre
 13. Extrusión de geometrías (polígonos): [Explicación](13.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/13.html)
 14. Mapa de calor (heatmap) : [Explicación](14.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/14.html)
 15. Símbolo graduado: [Explicación](15.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/15.html)
-
-15bis. Símbolo graduado clásico (Dana 29 octubre 2024): [Explicación](15.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/15bis.html)
-
-17. Agrupamiento (clustering) de puntos: [Explicación](16.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/16.html)
-18. Filtrado de datos (dana): [Explicación](17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
+16. Símbolo graduado clásico (Dana 29 octubre 2024): [Explicación](16.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/16.html)
+17. Agrupamiento (clustering) de puntos: [Explicación](17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
+18. Filtrado de datos (dana): [Explicación](18.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/18.html)
