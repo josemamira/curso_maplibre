@@ -2,165 +2,155 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <title>MapLibre Filtering Example</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet" />
-  <style>
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
+    <title>Create and style clusters</title>
+    <meta property="og:description" content="Use MapLibre GL JS' built-in functions to visualize points as clusters." />
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel='stylesheet' href='https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css' />
+    <script src='https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js'></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
 
-    .controls {
-      position: absolute;
-      top: 10px;
-      left: 10px;
-      background: white;
-      padding: 10px;
-      border-radius: 5px;
-      z-index: 1;
-    }
-  </style>
+        html,
+        body,
+        #map {
+            height: 100%;
+        }
+    </style>
 </head>
 
 <body>
+    <div id="map"></div>
 
-  <div id="map"></div>
-  <div class="controls">
-    <label for="help_type">Tipo de ayuda:</label>
-    <select id="help_type">
-      <option value="">Todas</option>
-      <option value="alojamiento">alojamiento</option>
-      <option value="distribucion">distribucion</option>
-      <option value="evacuacion">evacuacion</option>
-      <option value="limpieza">limpieza</option>
-      <option value="logistico">logistico</option>
-      <option value="psicologico">psicologico</option>
-      <option value="rescate">rescate</option>
-      <!--<option value="evacuacion">C</option>
-      <option value="evacuacion">C</option>
-      <option value="evacuacion">C</option>-->
+    <script>
+        // Inicializa el mapa
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+            center: [-0.4030, 39.4531], // Coordenadas iniciales [longitud, latitud] Valencia
+            zoom: 7,
+            hash: true
+        });
 
-    </select>
+        map.on('load', () => {
+            // Add a new source from our GeoJSON data and
+            // set the 'cluster' option to true. GL-JS will
+            // add the point_count property to your source data.
+            map.addSource('observatorios', {
+                type: 'geojson',
+                // Point to GeoJSON data. This example visualizes all M1.0+ earthquakes
+                // from 12/22/15 to 1/21/16 as logged by USGS' Earthquake hazards program.
+                data: 'data/0508_AVAMET.geojson',
+                cluster: true,
+                clusterMaxZoom: 14, // Max zoom to cluster points on
+                clusterRadius: 50 // Radius of each cluster when clustering points (defaults to 50)
+            });
 
-    <label for="urgency">urgencia:</label>
-    <select id="urgency">
-      <option value="">Todas</option>
-      <option value="alta">alta</option>
-      <option value="media">media</option>
-      <option value="baja">baja</option>
-    </select>
-  </div>
+            map.addLayer({
+                id: 'clusters',
+                type: 'circle',
+                source: 'observatorios',
+                filter: ['has', 'point_count'],
+                paint: {
+                    // Use step expressions (https://maplibre.org/maplibre-style-spec/#expressions-step)
+                    // with three steps to implement three types of circles:
+                    //   * Blue, 20px circles when point count is less than 100
+                    //   * Yellow, 30px circles when point count is between 100 and 750
+                    //   * Pink, 40px circles when point count is greater than or equal to 750
+                    'circle-color': [
+                        'step',
+                        ['get', 'point_count'],
+                        '#51bbd6',
+                        100,
+                        '#f1f075',
+                        750,
+                        '#f28cb1'
+                    ],
+                    'circle-radius': [
+                        'step',
+                        ['get', 'point_count'],
+                        20,
+                        100,
+                        30,
+                        750,
+                        40
+                    ]
+                }
+            });
 
-  <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
-  <script>
-    // Inicializar el mapa
-    const map = new maplibregl.Map({
-      container: 'map',
-      style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
-      center: [-0.405, 39.43],
-      zoom: 12,
-      hash: true
-    });
+            map.addLayer({
+                id: 'cluster-count',
+                type: 'symbol',
+                source: 'observatorios',
+                filter: ['has', 'point_count'],
+                layout: {
+                    'text-field': '{point_count_abbreviated}',
+                    //'text-font': ['Arial Unicode MS Bold'],
+                    'text-size': 12
+                }
+            });
 
-    // GeoJSON de puntos con categorías y prioridades
+            map.addLayer({
+                id: 'unclustered-point',
+                type: 'circle',
+                source: 'observatorios',
+                filter: ['!', ['has', 'point_count']],
+                paint: {
+                    'circle-color': '#11b4da',
+                    'circle-radius': 4,
+                    'circle-stroke-width': 1,
+                    'circle-stroke-color': '#fff'
+                }
+            });
 
-    // Agregar fuente y capa de puntos
-    map.on('load', () => {
-      map.addSource('dana', {
-        type: 'geojson',
-        data: 'data/dana.geojson'
-      });
+            // inspect a cluster on click
+            map.on('click', 'clusters', async (e) => {
+                const features = map.queryRenderedFeatures(e.point, {
+                    layers: ['clusters']
+                });
+                const clusterId = features[0].properties.cluster_id;
+                const zoom = await map.getSource('observatorios').getClusterExpansionZoom(clusterId);
+                map.easeTo({
+                    center: features[0].geometry.coordinates,
+                    zoom
+                });
+            });
 
-      map.addLayer({
-        "id": "points-layer",
-        "type": "circle",
-        "source": "dana",
-        "paint": {
-          "circle-radius": 10,
-          //"circle-color": "#007cbf"
-          'circle-color': [
-            'match',
-            ['get', 'urgency'],
-            'alta', '#ff0000',
-            'media', '#ffff00',
-            'baja', '#00ff00',
-            '#ff0000' // resto valores
-          ]
-        }
-      });
-    });
+            // When a click event occurs on a feature in
+            // the unclustered-point layer, open a popup at
+            // the location of the feature, with
+            // description HTML from its properties.
+            map.on('click', 'unclustered-point', (e) => {
+                const coordinates = e.features[0].geometry.coordinates.slice();
+                const prec = e.features[0].properties.precipitacion;
+                const temp = e.features[0].properties.temperatura;                
 
-    // Función para actualizar el filtro
-    function updateFilter() {
-      const selectedCategory = document.getElementById("help_type").value;
-      const selectedPriority = document.getElementById("urgency").value;
+                // Ensure that if the map is zoomed out such that
+                // multiple copies of the feature are visible, the
+                // popup appears over the copy being pointed to.
+                while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                    coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+                }
 
-      const filters = ["all"];
+                new maplibregl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(
+                        `Precipitacion: ${prec}<br>Temperatura: ${temp}`
+                    )
+                    .addTo(map);
+            });
 
-      // Filtrar por categor�a si se seleccion� alguna
-      if (selectedCategory) {
-        filters.push(["==", ["get", "help_type"], selectedCategory]);
-      }
-
-      // Filtrar por prioridad si se seleccion� alguna
-      if (selectedPriority) {
-        filters.push(["==", ["get", "urgency"], selectedPriority]);
-      }
-
-      map.setFilter("points-layer", filters.length > 1 ? filters : null);
-    }
-
-    // Escuchar cambios en los selectores
-    document.getElementById("help_type").addEventListener("change", updateFilter);
-    document.getElementById("urgency").addEventListener("change", updateFilter);
-
-
-    // Información
-    // Evento al hacer click
-    map.on('click', 'points-layer', (e) => {
-      const coordinates = e.lngLat;
-      const name = e.features[0].properties.name;
-      const location = e.features[0].properties.location;
-      const description = e.features[0].properties.description;
-      const number_of_people = e.features[0].properties.number_of_people;
-      const help_type = e.features[0].properties.help_type;
-      const contact_info = e.features[0].properties.contact_info;
-      const municipio = e.features[0].properties.municipio;
-
-
-      const popupTxt = '<h2>' + name + '</h2>' +
-        '<p>'+ description + '</p>'+
-        '<ul>' +
-        '<li>Tipo ayuda: <b>' + help_type + '</b></li>' +
-        '<li>Ubicación: ' + location + '</li>' +
-        '<li>Municipio: ' + municipio + '</li>' +
-        '<li>Nº personas solicitadas: ' + number_of_people + '</li>' +
-        '<li>Información de contacto: ' + contact_info + '</li>' +
-        '</ul>';
-
-
-      new maplibregl.Popup()
-        .setLngLat(coordinates)
-        .setHTML(popupTxt)
-        .addTo(map);
-    });
-
-    // Evento cuando estás encima del punto
-    map.on('mouseenter', 'points-layer', () => {
-      map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Evento cuando dejas el punto
-    map.on('mouseleave', 'points-layer', () => {
-      map.getCanvas().style.cursor = '';
-    });
-
-  </script>
-
+            map.on('mouseenter', 'clusters', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+            map.on('mouseleave', 'clusters', () => {
+                map.getCanvas().style.cursor = '';
+            });
+        });
+    </script>
 </body>
 
 </html>
