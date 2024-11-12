@@ -29,6 +29,7 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 17. Agrupamiento (clustering) de puntos: [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
 18. Filtrado de datos (dana): [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/18.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/18.html)
 19. Isopletas con la precipitación (DANA): [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
+20. Isopletas con la temperatura: [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandt.html)
 
 ## Enlaces de interés:
 
