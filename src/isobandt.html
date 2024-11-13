@@ -71,6 +71,43 @@
                 const response = await fetch('data/0508_AVAMET_2024-11-13.geojson');
                 const geojson = await response.json();
 
+
+                // Calcula los valores de temperatura mínimos y máximos  
+                // Filtra los puntos que tienen el atributo "temperatura" no nulo
+                const temperaturas = geojson.features
+                    .map(feature => feature.properties.temp)
+                    .filter(temp => temp !== null && temp !== undefined);
+
+                // Encuentra los valores mínimo y máximo de las temperaturas
+                const minTemp = Math.min(...temperaturas);
+                const maxTemp = Math.max(...temperaturas);
+
+                console.log(`Temperatura mínima: ${minTemp}°C`);
+                console.log(`Temperatura máxima: ${maxTemp}°C`);
+
+
+
+                // Función para encontrar el índice al que pertenece un valor dentro del array de temp o colores
+                // Por ej. la temp 9.9º está en el intervalor entre 8 y 10º, es decir que le pertenece el índice 13 en el tempArr
+                function findClosestIndex(arr, target) {
+                    for (let i = 0; i < arr.length - 1; i++) {
+                        if (arr[i] <= target && arr[i + 1] >= target) {
+                            return i;  // Retorna el índice del valor menor
+                        }
+                    }
+                    return -1; // Retorna -1 si no encuentra un intervalo válido
+                }
+
+                const indexTemMin = findClosestIndex(tempArr, minTemp);
+                const indexTemMax = findClosestIndex(tempArr, maxTemp);
+                console.log(indexTemMin); // Esto imprimirá el índice correspondiente
+
+                const colorArrNew = colorArr.slice(indexTemMin, indexTemMax + 2);
+                const tempArrNew = tempArr.slice(indexTemMin, indexTemMax + 2);
+                console.log(colorArrNew);
+                console.log(tempArr);
+
+
                 // 2. Crear la interpolación con Turf.js
                 var interpolate_options = {
                     gridType: 'points',
@@ -81,13 +118,13 @@
                 const grid2 = turf.interpolate(geojson, 2, interpolate_options); // nota 2, es el grid de 2x2 km. Mejor 5
                 grid2.features.map((i) => (i.properties.temp = i.properties.temp.toFixed(2)));//devuelve PREC como texto, no número
                 // Nota. Es importante definir toFixed(2) para que haya decimales. Si lo ponemos a 0 (osea entero), no dejará que haya muchos breaks
-                console.log(grid2);
+                //console.log(grid2);
 
 
 
                 // hexagonos
                 const grid = turf.interpolate(geojson, 5, { gridType: 'hex', property: iValue, units: 'kilometers', weight: 10 });
-                console.log(grid);
+                //console.log(grid);
 
                 // 3. Agregar capa de puntos originales al mapa
                 map.addSource('puntos', { type: 'geojson', data: geojson });
@@ -146,6 +183,7 @@
                         { fill: colorArr[7] },
                         { fill: colorArr[8] },
                         { fill: colorArr[9] },
+                        { fill: colorArr[10] },
                         { fill: colorArr[11] },
                         { fill: colorArr[12] },
                         { fill: colorArr[13] },
@@ -167,10 +205,10 @@
                         { fill: colorArr[29] },
                         { fill: colorArr[30] },
                         { fill: colorArr[31] }
-                    ]
+                    ].slice(indexTemMin, indexTemMax + 2)
                 };
 
-                let isobands = turf.isobands(grid2, tempArr, isobands_options);
+                let isobands = turf.isobands(grid2, tempArrNew, isobands_options);
                 boundaries = turf.flatten(boundaries);
                 isobands = turf.flatten(isobands);
 
@@ -194,11 +232,11 @@
                     });
                 });
                 let intersection = turf.featureCollection(features);
-                console.log(intersection);
+                //console.log(intersection);
 
 
 
-                console.log(isobands);
+                //console.log(isobands);
                 map.addSource("isobands", {
                     type: "geojson",
                     data: isobands
@@ -261,14 +299,15 @@
                     }
                 });
 
-                // Añadir una capa de etiquetas
+                /// Añadir una capa de etiquetas
                 map.addLayer({
                     'id': 'pois_label',
                     'type': 'symbol',
                     'source': 'puntos',
                     'minzoom': 10,
                     'layout': {
-                        'text-field': ['concat', ['get', 'nom'], '\n', ["to-string", ['round', ['get', iValue]]]],
+                        'text-field': ['concat', ['get', 'nom'], '\n', ['get', iValue]],                        
+                        //'text-field': ['get', 'PREC'],
                         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
                         //'text-offset': [0, 1.25],
                         'text-offset': [0, 1],
@@ -281,7 +320,6 @@
                         'text-halo-width': 2
                     }
                 });
-
                 // Comarcas
                 map.addLayer({
                     id: 'comarcas',
@@ -295,9 +333,9 @@
 
 
                 // LEYENDA
-                const colors = colorArr;
+                const colors = colorArrNew;
 
-                const levels = tempArr;
+                const levels = tempArrNew;
 
                 const legendItems = document.getElementById('legend-items');
 
