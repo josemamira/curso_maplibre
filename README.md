@@ -28,8 +28,9 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 16. Símbolo graduado clásico (Dana 29 octubre 2024): [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/16.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/16.html)
 17. Agrupamiento (clustering) de puntos: [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/17.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/17.html)
 18. Filtrado de datos (dana): [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/18.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/18.html)
-19. Isopletas con la precipitación (DANA): [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
+19. Isoyetas con la precipitación (DANA Valencia 29-oct-2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
 20. Isopletas con la temperatura: [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandt.html)
+21. 19. Isoyetas con la precipitación (13 nov 2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandp.html)
 
 ## Enlaces de interés:
 
