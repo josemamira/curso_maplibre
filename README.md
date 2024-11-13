@@ -30,7 +30,7 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 18. Filtrado de datos (dana): [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/18.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/18.html)
 19. Isoyetas con la precipitación (DANA Valencia 29-oct-2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
 20. Isopletas con la temperatura: [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandt.html)
-21. 19. Isoyetas con la precipitación (13 nov 2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandp.html)
+21. Isoyetas con la precipitación (13 nov 2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandp.html)
 
 ## Enlaces de interés:
 
