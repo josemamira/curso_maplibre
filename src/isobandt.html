@@ -54,6 +54,7 @@
 
         colorArr = ['#7a388c', '#96308c', '#b5298c', '#d1218f', '#8a2be3', '#a661e8', '#c494f0', '#e0c9f7', '#ffffff', '#1a1a70', '#1a3694', '#1c54b8', '#1c70db', '#1f8fff', '#00eded', '#0ad9d6', '#14c4bf', '#21b2ab', '#66ff66', '#ccff00', '#ffff00', '#ffde00', '#ffbf00', '#ff9e00', '#ff8000', '#ff0000', '#ff33b2', '#e83391', '#d13370', '#b2334f', '#a1362e', '#8a360f'];
         tempArr = [-30, -25, -20, -15, -10, -8, -6, -4, -2, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44];
+        iValue = 'temp'; // Propiedad que se utilizará para interpolar
         // Inicialización del mapa
         const map = new maplibregl.Map({
             container: 'map',
@@ -67,25 +68,25 @@
         map.on('load', async () => {
             try {
                 // 1. Cargar el archivo GeoJSON (aquí se usa una URL de ejemplo)
-                const response = await fetch('data/0508_AVAMET.geojson');
+                const response = await fetch('data/0508_AVAMET_2024-11-13.geojson');
                 const geojson = await response.json();
 
                 // 2. Crear la interpolación con Turf.js
                 var interpolate_options = {
                     gridType: 'points',
-                    property: 'temperatura',
+                    property: iValue,
                     units: 'kilometers',
                     weight: 10
                 };
                 const grid2 = turf.interpolate(geojson, 2, interpolate_options); // nota 2, es el grid de 2x2 km. Mejor 5
-                grid2.features.map((i) => (i.properties.PREC = i.properties.temperatura.toFixed(2)));//devuelve PREC como texto, no número
+                grid2.features.map((i) => (i.properties.temp = i.properties.temp.toFixed(2)));//devuelve PREC como texto, no número
                 // Nota. Es importante definir toFixed(2) para que haya decimales. Si lo ponemos a 0 (osea entero), no dejará que haya muchos breaks
                 console.log(grid2);
 
 
 
                 // hexagonos
-                const grid = turf.interpolate(geojson, 5, { gridType: 'hex', property: 'temperatura', units: 'kilometers', weight: 10 });
+                const grid = turf.interpolate(geojson, 5, { gridType: 'hex', property: iValue, units: 'kilometers', weight: 10 });
                 console.log(grid);
 
                 // 3. Agregar capa de puntos originales al mapa
@@ -130,7 +131,7 @@
 
                 // isobandas
                 var isobands_options = {
-                    zProperty: "PREC",
+                    zProperty: iValue,
                     commonProperties: {
                         "fill-opacity": 0.8
                     },
@@ -226,7 +227,7 @@
                     type: 'symbol',
                     source: 'grid2',
                     layout: {
-                        'text-field': ['get', 'temperatura'],
+                        'text-field': ['get', iValue],
                         'visibility': 'none'
                     },
                     paint: {
@@ -247,22 +248,6 @@
                     paint: {
                         "fill-color": ["get", "fill"]
                     }
-
-                    /*paint: {
-                        "fill-color": ["get", "fill"],
-                        "fill-opacity": [
-                            "case",
-                            ["boolean", ["feature-state", "hover"], false],
-                            0.8,
-                            0.5
-                        ],
-                        "fill-outline-color": [
-                            "case",
-                            ["boolean", ["feature-state", "hover"], false],
-                            "#000",
-                            "#fff"
-                        ]
-                    }*/
                 });
 
 
@@ -283,7 +268,7 @@
                     'source': 'puntos',
                     'minzoom': 10,
                     'layout': {
-                        'text-field': ['concat', ['get', 'nom'], '\n', ["to-string", ['round', ['get', 'temperatura']]]],
+                        'text-field': ['concat', ['get', 'nom'], '\n', ["to-string", ['round', ['get', iValue]]]],
                         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
                         //'text-offset': [0, 1.25],
                         'text-offset': [0, 1],
