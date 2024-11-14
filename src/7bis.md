@@ -6,7 +6,7 @@ Su función es añadir una marca en el mapa con nuestra ubicación. Obviamente n
 Este ejemplo lo puedes ver también en la web de MapLibre que te dejo [aquí](https://maplibre.org/maplibre-gl-js/docs/examples/locate-user/)
 
 Para añadir este control sólo tienes que indicar este código:
-```html
+```js
      // Añadir botón geolocalización al mapa
     map.addControl(
         new maplibregl.GeolocateControl({
@@ -14,6 +14,17 @@ Para añadir este control sólo tienes que indicar este código:
                 enableHighAccuracy: true
             },
             trackUserLocation: true
+        })
+    );
+```
+
+También vamos a añadir otro control con los créditos al autor
+```js
+ // Créditos personalizados
+    map.addControl(
+        new maplibregl.AttributionControl({
+            compact: true, // compact layout
+            customAttribution: '<a href="https://josemamira.github.io/curso_maplibre" target="_blank">Jose Manuel Mira</a>'
         })
     );
 ```
@@ -52,6 +63,14 @@ El ejemplo completo lo puedes ver aquí
                 enableHighAccuracy: true
             },
             trackUserLocation: true
+        })
+    );
+
+ // Créditos personalizados
+    map.addControl(
+        new maplibregl.AttributionControl({
+            compact: true, // compact layout
+            customAttribution: '<a href="https://josemamira.github.io/curso_maplibre" target="_blank">Jose Manuel Mira</a>'
         })
     );
 </script>
