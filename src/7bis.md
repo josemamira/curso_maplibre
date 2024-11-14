@@ -1,9 +1,10 @@
 Eventos y controles
 ==================
 Los controles son botones que se añaden al mapa. Algunos están predefinidos, como el de geolocalización
+Este ejemplo lo puedes ver también en la web de MapLibre que te dejo [aquí](https://maplibre.org/maplibre-gl-js/docs/examples/locate-user/)
 
 ```html
-    // Add geolocate control to the map.
+     // Añadir botón geolocalización al mapa
     map.addControl(
         new maplibregl.GeolocateControl({
             positionOptions: {
@@ -15,7 +16,7 @@ Los controles son botones que se añaden al mapa. Algunos están predefinidos, c
 ```
 El ejemplo completo lo puedes ver aquí
 
-´´´html
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,7 +42,7 @@ El ejemplo completo lo puedes ver aquí
         zoom: 3 // starting zoom
     });
 
-    // Add geolocate control to the map.
+    // Añadir botón geolocalización al mapa
     map.addControl(
         new maplibregl.GeolocateControl({
             positionOptions: {
@@ -53,4 +54,4 @@ El ejemplo completo lo puedes ver aquí
 </script>
 </body>
 </html>
-´´´
+```html
