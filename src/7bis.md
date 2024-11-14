@@ -1,8 +1,11 @@
 Eventos y controles
 ==================
-Los controles son botones que se añaden al mapa. Algunos están predefinidos, como el de geolocalización
+Los controles son botones que se añaden al mapa. Algunos están predefinidos, como el de geolocalización.
+Su función es añadir una marca en el mapa con nuestra ubicación. Obviamente nos pedirá permiso para habilitar el servicio de geolocalización.
+
 Este ejemplo lo puedes ver también en la web de MapLibre que te dejo [aquí](https://maplibre.org/maplibre-gl-js/docs/examples/locate-user/)
 
+Para añadir este control sólo tienes que indicar este código:
 ```html
      // Añadir botón geolocalización al mapa
     map.addControl(
