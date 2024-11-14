@@ -2,7 +2,7 @@ Eventos y controles
 ==================
 Los controles son botones que se añaden al mapa. Algunos están predefinidos, como el de geolocalización
 
-´´´html
+```html
     // Add geolocate control to the map.
     map.addControl(
         new maplibregl.GeolocateControl({
@@ -12,7 +12,7 @@ Los controles son botones que se añaden al mapa. Algunos están predefinidos, c
             trackUserLocation: true
         })
     );
-´´´
+```
 El ejemplo completo lo puedes ver aquí
 
 ´´´html
