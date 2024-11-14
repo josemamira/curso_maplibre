@@ -32,6 +32,14 @@
             trackUserLocation: true
         })
     );
+
+     // Créditos personalizados
+    map.addControl(
+        new maplibregl.AttributionControl({
+            compact: true, // compact layout
+            customAttribution: '<a href="https://josemamira.github.io/curso_maplibre" target="_blank">Jose Manuel Mira</a>'
+        })
+    );
 </script>
 </body>
 </html>
