@@ -1359,7 +1359,7 @@ Crea un html con un formulario para realizar la matrícula de un alumno con esto
 
 ### Ejemplo completo
 
-``html
+```html
 <!DOCTYPE html>
 <html lang="es-ES">
 
