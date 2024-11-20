@@ -240,7 +240,7 @@ preocuparte. De lo contrarío deberás de saber que algunos caracteres utilizan 
 
 **** Te pongo unos ejemplos
 
-- La **á** podrás escribir por ejemplo **`irá`**, o también **'&aacute;'**, que en el ejemplo será **ir&aacute;**
+- La **á** podrás escribir por ejemplo **`irá`**, o también `&aacute;`, que en el ejemplo será **ir&aacute;**
 
 Te pongo algunos caracteres más :
 
