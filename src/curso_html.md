@@ -1122,19 +1122,19 @@ En este ejemplo vamos a representar el mismo color de 3 formas diferentes:
 
 | Nombre del color | Color de fondo       |
 |------------------|----------------------|
-| Red              | $${\color{red}Red}$$ |
-| Green            | $${\color{green}Green▆}$$  |
-| Blue             | $${\color{blue}Green}$$ |
-| Yellow           | $${\color{yelow}yelow}$$ |
-| Cyan             | $${\color{cyan}cyan}$$ |
-| Magenta          | $${\color{magenta}magenta}$$ |
-| Black            | $${\color{black}black}$$ |
-| White            | $${\color{white}white}$$ |
-| Gray             | $${\color{gray}gray}$$ |
-| Orange           | $${\color{orange}orange}$$ |
-| Pink             | $${\color{pink}pink}$$ |
-| Purple           | $${\color{purple}purple}$$ |
-| Brown            |$${\color{brown}brown}$$ |
+| Red              | $${\color{red}▆ red}$$ |
+| Green            | $${\color{green}▆ green}$$  |
+| Blue             | $${\color{blue}▆ blue}$$ |
+| Yellow           | $${\color{yelow}▆ yelow}$$ |
+| Cyan             | $${\color{cyan}▆ cyan}$$ |
+| Magenta          | $${\color{magenta}▆ magenta}$$ |
+| Black            | $${\color{black}▆ black}$$ |
+| White            | $${\color{white}▆ white}$$ |
+| Gray             | $${\color{gray}▆ gray}$$ |
+| Orange           | $${\color{orange}▆ orange}$$ |
+| Pink             | $${\color{pink}▆ pink}$$ |
+| Purple           | $${\color{purple}▆ purple}$$ |
+| Brown            |$${\color{brown}▆ brown}$$ |
 
 
 
