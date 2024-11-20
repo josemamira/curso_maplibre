@@ -1122,18 +1122,18 @@ En este ejemplo vamos a representar el mismo color de 3 formas diferentes:
 
 | Nombre del color | Color de fondo       |
 |------------------|----------------------|
-| Red              | $${\color{red}Red}$$ <span style="background-color:#ff0000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Green            | <span style="background-color:#008000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Blue             | <span style="background-color:#0000ff;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Yellow           | <span style="background-color:#ffff00;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Cyan             | <span style="background-color:#00ffff;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Magenta          | <span style="background-color:#ff00ff;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Black            | <span style="background-color:#000000;color:white;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| White            | <span style="background-color:#ffffff;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Gray             | <span style="background-color:#808080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Orange           | <span style="background-color:#ffa500;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Pink             | <span style="background-color:#ffc0cb;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
-| Purple           | <span style="background-color:#800080;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
+| Red              | $${\color{red}Red}$$ |
+| Green            | $${\color{green}Green&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}$$  |
+| Blue             | $${\color{red}Green}$$ |
+| Yellow           | $${\color{red}Green}$$ |
+| Cyan             | $${\color{red}Green}$$ |
+| Magenta          | $${\color{red}Green}$$ |
+| Black            | $${\color{red}Green}$$ |
+| White            | $${\color{red}Green}$$ |
+| Gray             | $${\color{red}Green}$$ |
+| Orange           | $${\color{red}Green}$$ |
+| Pink             | $${\color{red}Green}$$ |
+| Purple           | $${\color{red}Green}$$ |
 | Brown            | <span style="background-color:#a52a2a;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
 
 
