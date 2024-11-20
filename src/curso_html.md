@@ -1230,7 +1230,7 @@ Aquí tienes un HTML con una tabla con los nombres de los colores y su represent
 <a name="11"></a>
 # Formularios
 
-###Definición
+### Definición
 
 Los formularios HTML son elementos de las páginas web que nos sirven para recuperar información del usuario y enviarla al servidor para que pueda ser procesada.
 
