@@ -1,6 +1,6 @@
 Curso HTML
 =========
-
+<a name="indice"></a>
 # Contenido
 - [Entorno de trabajo](#0)
 - [Estructura de un HTML](#1)
@@ -43,7 +43,7 @@ Respecto a editores online de html mira estos ejemplos
 - De HTML a WYSIWYG   [https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default](https://www.w3schools.com/html/tryit.asp?filename=tryhtml_default)
 
 
-
+[Volver al índice](#indice)
 <a name="1"></a>
 # Estructura de un HTML
 
