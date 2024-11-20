@@ -6,7 +6,9 @@ Si quieres leer más sobre **teselas vectoriales** te recomiendo que leas este m
 
 [Taller Vector Tiles de Geoinquietos](https://geoinquiets.github.io/taller-vt/)
 
-Para poder entender este curso debes de tener algunas nociones básicas sobre HTML y JavaScript. Sí ya las tienes ya puedes empezar
+Para poder entender este curso debes de tener algunas nociones básicas sobre HTML y JavaScript. Sí ya las tienes ya puedes empezar, y si no te recomiendo que antes consultes algún manual. También te incluyo un manual básico sobre HTML que puedes consultar aquí:
+
+[Curso HTML básico](https://github.com/josemamira/curso_maplibre/blob/main/src/curso_html.md)
 
 # Índice
 
