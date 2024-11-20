@@ -83,6 +83,7 @@ En resumén, aquí tienes un página web lista para que la utilices como base pa
 ```
 
 
+[Volver al índice](#indice)
 
 <a name="2"></a>
 # Contenido de un HTML
@@ -133,6 +134,8 @@ El editor de texto es el siguiente:
 
 ### Tareas
 Crea un HTML llamado **ej2.html**  con la plantilla de esta página y rellena el BODY con lo que has creado con el editor online.
+
+[Volver al índice](#indice)
 
 <a name="3"></a>
 # Etiquetas
@@ -324,6 +327,7 @@ Puedes ver más ejemplos en este [enlace](http://www.webusable.com/CharsExtended
 </BODY>
 </HTML>
 ```
+[Volver al índice](#indice)
 
 <a name="4"></a>
 # Enlaces
@@ -479,7 +483,7 @@ Aquí tienes 2 enlaces a 2 marcadores internos
 </HTML>
 
 ```
-
+[Volver al índice](#indice)
 <a name="6"></a>
 # Tablas
 Para crear una tabla utiliza el tag **TABLE**
@@ -595,6 +599,7 @@ Una imagen utiliza el tag **IMG** paro no termina con **IMG**. Debes de tener en
 
 ```
 
+[Volver al índice](#indice)
 <a name="7">
 # Estilos CSS
 
@@ -880,6 +885,7 @@ La forma de aplicarlo es utilizando el parámetro **class="nombre_del_estilo_sin
 </HTML>
 ```
 
+[Volver al índice](#indice)
 <a name="8">
 # Librería de estilos
 
@@ -1097,6 +1103,7 @@ El resultado será que cada contenedor se formateará con los estilos definidos 
 </HTML>
 ```
 
+[Volver al índice](#indice)
 <a name="10">
 # Colores
 
@@ -1219,7 +1226,7 @@ Aquí tienes un HTML con una tabla con los nombres de los colores y su represent
 
 ```
 
-
+[Volver al índice](#indice)
 <a name="11"></a>
 # Formularios
 
@@ -1503,6 +1510,7 @@ Crea un html con un formulario para realizar la matrícula de un alumno con esto
 </HTML>
 ```
 
+[Volver al índice](#indice)
 <a name="12"></a>
 # JavaScript
 Sí con el CSS la web se enriquece visualmente, la interacción viene de la mano de Javascript. Si quieres darle **magia** a tu web debes de conocer este lenguaje. 
@@ -1959,4 +1967,5 @@ c) Contenido del HTML
 </HTML>
 ```
 
+[Volver al índice](#indice)
 
