@@ -1122,7 +1122,7 @@ En este ejemplo vamos a representar el mismo color de 3 formas diferentes:
 
 | Nombre del color | Color de fondo       |
 |------------------|----------------------|
-| Red              | <span style="background-color:#ff0000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
+| Red              | $${\color{red}Red}$$ <span style="background-color:#ff0000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
 | Green            | <span style="background-color:#008000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
 | Blue             | <span style="background-color:#0000ff;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
 | Yellow           | <span style="background-color:#ffff00;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> |
