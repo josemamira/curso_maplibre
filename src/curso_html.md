@@ -105,7 +105,7 @@ Como hasta ahora no conoces el lenguaje HTML te recomiendo que utilices un edito
 
 El editor de texto es el siguiente:
 
-[editor HTML WYSIWYG](./editor.html)
+[editor HTML WYSIWYG](https://josemamira.github.io/curso_maplibre/src/editor.html)
 
 
 ### Texto completo:
