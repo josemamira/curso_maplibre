@@ -1,6 +1,6 @@
 # Curso MapLibre GL JS
 
-![Composición con los mapas elaborados](img/composicion.png)
+![Composición con los mapas elaborados](src/img/composicion.png)
 
 
 Si ha llegado hasta aquí es que te gusta publicar mapas en Internet. MapLibre es una moderna librería Javascript procedente de otro proyecto  (fork) denominado **MapBox GL JS**. El objetivo de esta libería es publicar mapas utilizando el sistema de teselas vectoriales (vector tiles). 
