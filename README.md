@@ -1,3 +1,4 @@
+{% raw %}{% seo %}{% endraw %}
 # Curso MapLibre GL JS
 
 ![Composición con los mapas elaborados](src/img/composicion.png)
