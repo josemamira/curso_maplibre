@@ -145,10 +145,10 @@ Las etiquetas es el corazón del lenguaje HTML. Todo son etiquetas.
 Por regla general todas las etiquetas tiene la misma sintaxis: 
 
 - empiezan por un ``` <nombre tag>```
-- terminan por un ** </nombre tag>** . Fíjate que hemos añadido **/**
+- terminan por un ``` </nombre tag>``` . Fíjate que hemos añadido ```/```
 - emmedio de los tags estará el contenido del tag.
 
-*** Ejemplo:
+### Ejemplo:
 
 Por ejemplo, la etiqueta o tag para crear un párrafo se llama **p**, por tanto un párrafo se utilizará de esta  manera
 ```html
@@ -167,11 +167,11 @@ Hay algunas excepciones en algunos tags que no tienen contenido, y por tanto só
 
 ### Etiquetas más comunes
 
-**** Centrar texto: 
+#### Centrar texto: 
 <center>Este texto aparecerá centrado en la página</center>
 ```
-**** Títulos
-En función del tamaño del título podemos utilizar varias opciones, desdes el más grande, el **H1** hasta el má pequeño, el **H5**
+#### Títulos
+En función del tamaño del título podemos utilizar varias opciones, desdes el más grande, el **H1** hasta el má pequeño, el ```H5```
 ```html
 	<h1>título en H1</h1>
 	<h2>título en H2</h2>
