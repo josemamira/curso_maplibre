@@ -144,7 +144,7 @@ Las etiquetas es el corazón del lenguaje HTML. Todo son etiquetas.
 
 Por regla general todas las etiquetas tiene la misma sintaxis: 
 
-- empiezan por un ** <nombre tag>**
+- empiezan por un ``` <nombre tag>```
 - terminan por un ** </nombre tag>** . Fíjate que hemos añadido **/**
 - emmedio de los tags estará el contenido del tag.
 
