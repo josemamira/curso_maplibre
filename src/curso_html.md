@@ -956,9 +956,9 @@ Fíjate como con muy poco esfuerzo vamos a crear una página web con mucho estil
 ### Práctica:
 Visita la web de w3.css y utiliza alguno de los ejemplos indicados, como por ejemplo paneles (panel), tarjetas (cards), etc.
 
-<a name="9">
-	
+<a name="9">	
 # Contenedores (DIV)
+
 
 ### Definición
 En HTML, la etiqueta   `<div>`  es un contenedor genérico de bloque para otros elementos. Se puede posicionar donde uno quiera usando style. Un contenedor puede tener también un nombre. Un ejemplo de un div es un formulario con botones, cajas de texto, etc.
