@@ -604,7 +604,7 @@ Una imagen utiliza el tag **IMG** paro no termina con **IMG**. Debes de tener en
 <a name="7">
 # Estilos CSS
 
-###Objetivo
+### Objetivo
 
 Estilizar el contenido con colores, efectos, fuentes, etc.
 Estas propiedades se escriben en un lenguaje que se llama CSS (estilos de cascada), y no dejan de ser propiedades para modificar la visualización de las etiquetas en el navegador
@@ -924,7 +924,7 @@ Fíjate como con muy poco esfuerzo vamos a crear una página web con mucho estil
 </div>
 ```
 
-### Ejemplo comopleto
+### Ejemplo completo
 
 ```html
 <!DOCTYPE html>
@@ -957,6 +957,7 @@ Fíjate como con muy poco esfuerzo vamos a crear una página web con mucho estil
 Visita la web de w3.css y utiliza alguno de los ejemplos indicados, como por ejemplo paneles (panel), tarjetas (cards), etc.
 
 <a name="9">
+	
 # Contenedores (DIV)
 
 ### Definición
@@ -1008,9 +1009,9 @@ También vamos a crear un **style** en el HEAD para que se formateen los divs co
 			text-align: center;
 		}
 </style>
-```html
+```
 
-El resultado será que cada contenedor se formateará con los estilos definidos en **#nombre_div_1** y **#nombre_div_2**
+El resultado será que cada contenedor se formateará con los estilos definidos en `#nombre_div_1` y `nombre_div_2`
 
 ### Ejemplo completo
 
