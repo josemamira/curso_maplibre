@@ -150,7 +150,7 @@ Por regla general todas las etiquetas tiene la misma sintaxis:
 
 ### Ejemplo:
 
-Por ejemplo, la etiqueta o tag para crear un párrafo se llama **p**, por tanto un párrafo se utilizará de esta  manera
+Por ejemplo, la etiqueta o tag para crear un párrafo se llama ```p```, por tanto un párrafo se utilizará de esta  manera
 ```html
 <p>Hola esto es un párrafo</p>
 ```
@@ -170,8 +170,9 @@ Hay algunas excepciones en algunos tags que no tienen contenido, y por tanto só
 #### Centrar texto: 
 <center>Este texto aparecerá centrado en la página</center>
 ```
+
 #### Títulos
-En función del tamaño del título podemos utilizar varias opciones, desdes el más grande, el **H1** hasta el má pequeño, el ```H5```
+En función del tamaño del título podemos utilizar varias opciones, desdes el más grande, el ```H1``` hasta el más pequeño, el ```H5```
 ```html
 	<h1>título en H1</h1>
 	<h2>título en H2</h2>
@@ -180,7 +181,7 @@ En función del tamaño del título podemos utilizar varias opciones, desdes el 
 	<h5>título en H5</h5>
 ```
 
-*** Párrafo
+#### Párrafo
 Ya lo hemos visto. Aquí tienes más ejemplos:
 
 ```html
@@ -192,17 +193,17 @@ Ya lo hemos visto. Aquí tienes más ejemplos:
 	</p>
 ```
 
-*** Formas del texto: negrita, cursiva, subrayado
+#### Formas del texto: negrita, cursiva, subrayado
 
-- Escribir algo en negrita. Utiliza **b**, o **strong**
+- Escribir algo en negrita. Utiliza ```b```, o ```strong```
 ```html
 	<b>Este texto aparecerá en negrita</b>
 ```
-- Escribir algo en cursiva. Utiliza **i**
+- Escribir algo en cursiva. Utiliza ```i```
 ```html
 	<i>Este texto aparecerá en cursiva</i>
 ```
-- Escribir algo subrayado. Utiliza **u**
+- Escribir algo subrayado. Utiliza ```u```
 ```html
 	<u>Este texto aparecerá subrayado</u>
 ```
@@ -241,9 +242,9 @@ Hay 2 tipos de listas, ordenadas (con números como 1,2,3, etc) y sin ordenar
 Si tienes especificado en el HEAD que vas a utilizar la codificación de caracteres UTF-8 no tienes que :
 preocuparte. De lo contrarío deberás de saber que algunos caracteres utilizan otra notificación para que el navegador lo entienda. Se trata del caso de los acentos, eñe, diáresis, y otros caracteres específicos del español.
 
-**** Te pongo unos ejemplos
+#### Te pongo unos ejemplos
 
-- La **á** podrás escribir por ejemplo **`irá`**, o también `&aacute;`, que en el ejemplo será **ir&aacute;**
+- La ```á``` podrás escribir por ejemplo **`irá`**, o también `&aacute;`, que en el ejemplo será **ir&aacute;**
 
 Te pongo algunos caracteres más :
 
