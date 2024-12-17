@@ -25,7 +25,7 @@
     <div id="legend"
         style="position: absolute; bottom: 10px; left: 10px; background-color: white; padding: 10px; border-radius: 5px;">
         <h4>Temperatura media</h4>
-        <p>Fecha: 12-nov-2024</p>
+        <p><div id="fecha"></div></p>
         <div id="legend-items"></div>
     </div>
 
@@ -35,6 +35,20 @@
     <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
     <script>
+        function mostrarFechaHora() {
+            const fecha = new Date();
+            const dia = String(fecha.getDate()).padStart(2, '0');
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+            const anio = fecha.getFullYear();
+            const horas = String(fecha.getHours()).padStart(2, '0');
+            const minutos = String(fecha.getMinutes()).padStart(2, '0');
+
+            const fechaHora = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+            document.getElementById("fecha").textContent = fechaHora;
+        }
+        // Ejecutar la función al cargar la página
+        window.onload = mostrarFechaHora;
+
         // Límite CV
         let boundaries = {
             type: "FeatureCollection",
@@ -64,12 +78,29 @@
             bounds: turf.bbox(boundaries)
         });
 
+        // Decodificar entidades HTML. Cambia caracteres html como &iacute; a í, etc.
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+
+
         // Cargar el archivo GeoJSON y realizar la interpolación
         map.on('load', async () => {
             try {
                 // 1. Cargar el archivo GeoJSON (aquí se usa una URL de ejemplo)
                 const response = await fetch('https://terramapas.icv.gva.es/0508_AVAMET?request=GetFeature&service=WFS&version=2.0.0&typename=AVAMET.Estaciones&outputformat=geojson&SrsName=EPSG:4326');
                 const geojson = await response.json();
+
+
+                // Convertir los datos decodificando las propiedades necesarias
+                geojson.features.forEach(feature => {
+                    if (feature.properties && feature.properties.nom) {
+                        feature.properties.nom = decodeHTMLEntities(feature.properties.nom);
+                    }
+                });
 
 
                 // Calcula los valores de temperatura mínimos y máximos  
@@ -306,7 +337,7 @@
                     'source': 'puntos',
                     'minzoom': 10,
                     'layout': {
-                        'text-field': ['concat', ['get', 'nom'], '\n', ['get', iValue]],                        
+                        'text-field': ['concat', ['get', 'nom'], '\n', ['get', iValue]],
                         //'text-field': ['get', 'PREC'],
                         'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
                         //'text-offset': [0, 1.25],
