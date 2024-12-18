@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mapa con Interpolación de Puntos usando MapLibre y Turf (temperatura)</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet" />
     <style>
         body {
@@ -17,6 +18,36 @@
             width: 100vw;
             height: 100vh;
         }
+
+        .sidebar {
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            right: -300px;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+        }
+
+        .sidebar-content {
+            padding: 15px;
+        }
     </style>
 </head>
 
@@ -25,8 +56,22 @@
     <div id="legend"
         style="position: absolute; bottom: 10px; left: 10px; background-color: white; padding: 10px; border-radius: 5px;">
         <h4>Temperatura media</h4>
-        <p><div id="fecha"></div></p>
+        <p>
+        <div id="fecha"></div>
+        </p>
         <div id="legend-items"></div>
+    </div>
+    <div id="sidebar" class="sidebar w3-card w3-animate-left">
+        <div class="w3-bar w3-dark-grey">
+            <span class="w3-bar-item w3-padding-16">Datos</span>
+            <button id="close-btn" class="w3-bar-item w3-button w3-right w3-padding-16" title="close Sidebar">×</button>
+        </div>
+        <div class="w3-bar w3-green">
+            <span id="sidebar-title" class="w3-bar-item w3-padding-16">Nombre</span>
+        </div>
+        <div id="sidebar-content" class="sidebar-content">
+            <!--los atributos aparecen aquí -->
+        </div>
     </div>
 
 
@@ -361,6 +406,68 @@
                         'line-width': 2          // Grosor del borde
                     }
                 });
+
+                // Evento click
+                map.on('click', 'pois_label', (e) => {
+                    /*
+                            "id": "25458153",
+                            "tipus": "AVAMET",
+                            "codi": "c01m091e01",
+                            "altitud": "1074",
+                            "nom": "Portell de Morella",
+                            "urlmxo": "http://www.avamet.org/mxo_i.php?id=c01m091e01",
+                            "webcam": "https://www.avamet.es/estacions/public_html/portell/webcam.jpg",
+                            "actualitzacio": "2024-12-18 08:55:00+01",
+                            "temp": "9",
+                            "hrel": "74",
+                            "vent_vel": "0",
+                            "vent_dir": "360",
+                            "vent_dir_360": "90",
+                            "vent_max": "16.1",
+                            "pres": "1030.5",
+                            "prec": "0"
+                    */
+                    const feature = e.features[0];
+                    var enlace = '';
+                    if (feature.properties.urlmxo == null) { enlace = ''; } else { enlace = '<a class="w3-button  w3-teal" href="' + feature.properties.urlmxo + '" target="_blank">Enlace AVAMET</a>'; }
+                    var foto = '';
+                    if (feature.properties.webcam == '') { foto = '<img src="img/no_webcam.jpg" alt="webcam" style="width: 100%;">'; } else { foto = '<img src="' + feature.properties.webcam + '" alt="webcam" style="width: 100%;">'; }
+                    
+
+
+                    const sidebar = document.getElementById('sidebar');
+                    const sidebarTitle = document.getElementById('sidebar-title');
+                    sidebarTitle.innerHTML = `
+                            <h3>${feature.properties.nom}</h3>                    
+                        `;
+                    const sidebarContent = document.getElementById('sidebar-content');
+                    sidebarContent.innerHTML = `
+                            <br>${foto}                  
+                            <p><b>Temperatura:</b> ${feature.properties.temp}</p>
+                            <p><b>Precipitación:</b> ${feature.properties.prec}</p>
+                            <p><b>Presión:</b> ${feature.properties.pres}</p>
+                            <p><b>Altitud:</b> ${feature.properties.altitud}</p>
+                            <p><b>Humedad relativa:</b> ${feature.properties.hrel}</p>
+                            <p><b>Viento (velocidad):</b> ${feature.properties.vent_vel}</p>
+                            <p><b>Viento (dirección):</b> ${feature.properties.vent_dir}</p>
+                            <p><b>Viento (dirección 360º) 2:</b> ${feature.properties.vent_dir_360}</p>
+                            <p><b>Viento (máximo) 2:</b> ${feature.properties.vent_max}</p>
+                            <p align="center">${enlace}</p>
+                        `;
+                    sidebar.classList.add('open');
+                });
+
+                // Cambia el cursor a una mano cuando el ratón pasa por encima de los puntos
+                map.on('mouseenter', 'pois_label', () => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Cambia el cursor de nuevo cuando el ratón deja de estar sobre los puntos
+                map.on('mouseleave', 'pois_label', () => {
+                    map.getCanvas().style.cursor = '';
+                });
+
+                // fin evento click
 
 
                 // LEYENDA
