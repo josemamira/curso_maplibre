@@ -64,7 +64,7 @@
     <div id="sidebar" class="sidebar w3-card w3-animate-left">
         <div class="w3-bar w3-dark-grey">
             <span class="w3-bar-item w3-padding-16">Datos</span>
-            <button id="close-btn" class="w3-bar-item w3-button w3-right w3-padding-16" title="close Sidebar">×</button>
+            <button id="close-btn" class="w3-bar-item w3-button w3-right w3-padding-16" title="cerrar Menúr">×</button>
         </div>
         <div class="w3-bar w3-green">
             <span id="sidebar-title" class="w3-bar-item w3-padding-16">Nombre</span>
@@ -80,6 +80,9 @@
     <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
     <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
     <script>
+        document.getElementById("close-btn").addEventListener("click", function () {
+            document.getElementById("sidebar").style.display = "none";
+        });
         function mostrarFechaHora() {
             const fecha = new Date();
             const dia = String(fecha.getDate()).padStart(2, '0');
@@ -505,6 +508,7 @@
                 console.error('Error al cargar o procesar el GeoJSON:', error);
             }
         });
+        
     </script>
 </body>
 
