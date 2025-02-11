@@ -168,6 +168,7 @@ Hay algunas excepciones en algunos tags que no tienen contenido, y por tanto só
 ### Etiquetas más comunes
 
 #### Centrar texto: 
+```html
 <center>Este texto aparecerá centrado en la página</center>
 ```
 
