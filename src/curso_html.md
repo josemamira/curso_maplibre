@@ -349,7 +349,7 @@ Un hiperenlace empieza y acaba con **A** y tiene varios parámetros. Veamos los 
 ```
 
 ### Marca (o ancla)
-Para que un enlace se dirija a un marcador interno, es decir, a una zona de la propia página web, algo así como ir a un capítulo de un libro, es necesario indicar en la zona donde queremos que se enlace un ** marcador**.
+Para que un enlace se dirija a un marcador interno, es decir, a una zona de la propia página web, algo así como ir a un capítulo de un libro, es necesario indicar en la zona donde queremos que se enlace un **marcador**.
 
 El marcador tiene la sintaxis siguiente:
 ```html
