@@ -1,7 +1,9 @@
 # Precipitación en tiempo real
 
 Este HTML invoca al API de AVAMET para obtener un GeoJSON con los datos de los observatorios (puntos) y selecciona los de precipitación.
+
 La URL es:
+
 https://terramapas.icv.gva.es/0508_AVAMET?request=GetFeature&service=WFS&version=2.0.0&typename=AVAMET.Estaciones&outputformat=geojson&SrsName=EPSG:4326
 
 Los datos obtenidos por cada observatorio son:
