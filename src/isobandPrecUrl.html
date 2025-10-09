@@ -1,0 +1,515 @@
+<!-- based in source: https://codepen.io/shevawen/pen/abOPdJy -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa con Interpolación de Puntos usando MapLibre y Turf (precipitación)</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 300px;
+            height: 100%;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            right: -300px;
+            transition: right 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            padding: 15px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ccc;
+        }
+
+        .close-btn {
+            float: right;
+            cursor: pointer;
+        }
+
+        .sidebar-content {
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="map"></div>
+    <div id="legend"
+        style="position: absolute; bottom: 10px; left: 10px; background-color: white; padding: 10px; border-radius: 5px;">
+        <h4>Precipitación</h4>
+        <p>
+        <div id="fecha"></div>
+        </p>
+        <div id="legend-items"></div>
+    </div>
+    <div id="sidebar" class="sidebar w3-card w3-animate-left">
+        <div class="w3-bar w3-dark-grey">
+            <span class="w3-bar-item w3-padding-16">Datos</span>
+            <button id="close-btn" class="w3-bar-item w3-button w3-right w3-padding-16" title="cerrar Menúr">×</button>
+        </div>
+        <div class="w3-bar w3-green">
+            <span id="sidebar-title" class="w3-bar-item w3-padding-16">Nombre</span>
+        </div>
+        <div id="sidebar-content" class="sidebar-content">
+            <!--los atributos aparecen aquí -->
+        </div>
+    </div>
+
+
+
+
+    <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
+    <script src="https://unpkg.com/@turf/turf@6.5.0/turf.min.js"></script>
+    <script>
+        /*document.getElementById("close-btn").addEventListener("click", function () {
+            document.getElementById("sidebar").style.display = "none";
+        });*/
+        function mostrarFechaHora() {
+            const fecha = new Date();
+            const dia = String(fecha.getDate()).padStart(2, '0');
+            const mes = String(fecha.getMonth() + 1).padStart(2, '0'); // Los meses van de 0 a 11
+            const anio = fecha.getFullYear();
+            const horas = String(fecha.getHours()).padStart(2, '0');
+            const minutos = String(fecha.getMinutes()).padStart(2, '0');
+
+            const fechaHora = `${dia}/${mes}/${anio} ${horas}:${minutos}`;
+            document.getElementById("fecha").textContent = fechaHora;
+        }
+        // Ejecutar la función al cargar la página
+        window.onload = mostrarFechaHora;
+
+        // Límite CV
+        let boundaries = {
+            type: "FeatureCollection",
+            name: "boundaries",
+            crs: { type: "name", properties: { name: "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+            features: [
+                {
+                    type: "Feature",
+                    properties: {},
+                    geometry: {
+                        type: "MultiPolygon",
+                        coordinates: [[[[-0.740693986415863, 37.90930557250971], [-0.770750999450627, 37.84406661987299], [-0.830178976058903, 37.86429977416992], [-0.921250998973846, 37.944534301757805], [-1.022176027297973, 38.075237274169865], [-1.036584973335266, 38.13743209838867], [-0.988690972328186, 38.19958877563488], [-0.967348992824498, 38.2721939086914], [-0.989009976386967, 38.3205680847168], [-1.084408044815007, 38.34651565551758], [-1.088083982467595, 38.36773300170904], [-1.076017975807133, 38.43168640136719], [-1.094082951545715, 38.438331604003906], [-1.013854980468693, 38.49708557128906], [-1.026173949241581, 38.52251052856439], [-1.00148594379425, 38.572860717773494], [-1.026051044464111, 38.655689239501946], [-0.962399005889779, 38.65695953369146], [-0.915727019309941, 38.69599914550781], [-0.961362004280033, 38.774822235107536], [-0.928873002529087, 38.78386688232433], [-0.924471974372864, 38.89178466796881], [-0.956458985805511, 38.92015457153332], [-0.959344983100891, 38.944614410400334], [-1.146587014198303, 38.929386138916016], [-1.226470947265625, 39.02470397949224], [-1.263834953308105, 39.045124053955014], [-1.255653023719674, 39.106201171875114], [-1.180757999420166, 39.21185302734381], [-1.161823034286442, 39.30544662475597], [-1.207373976707458, 39.326030731201286], [-1.223261952400208, 39.316139221191456], [-1.312353014945983, 39.34311676025402], [-1.33623194694519, 39.333999633789], [-1.414057016372681, 39.38018035888672], [-1.423558950424137, 39.36402130126959], [-1.455036044120789, 39.36087799072277], [-1.468124985694828, 39.38335800170898], [-1.48846697807312, 39.401058197021484], [-1.505107045173588, 39.418025970458984], [-1.520782947540283, 39.43154907226568], [-1.528025984764099, 39.452228546142635], [-1.499084949493408, 39.5004768371582], [-1.520782947540283, 39.548885345458984], [-1.462015032768193, 39.57664489746093], [-1.417865991592407, 39.65496063232433], [-1.368468046188297, 39.689640045166016], [-1.312760949134827, 39.670509338378906], [-1.261929988861084, 39.69892883300781], [-1.275374054908639, 39.737014770507756], [-1.214938044547978, 39.808799743652344], [-1.19991397857666, 39.85945892333996], [-1.203917026519662, 39.94937133789062], [-1.071485042571965, 39.97968292236328], [-0.991253018379211, 39.981857299804744], [-0.931824028491974, 39.95610427856445], [-0.920394003391266, 39.96442794799816], [-0.902598977088871, 39.93187713623052], [-0.912501990795135, 39.872379302978516], [-0.863493978977147, 39.84743499755871], [-0.797631025314274, 39.88109207153332], [-0.840359985828286, 39.92497634887707], [-0.837882995605469, 39.976573944091854], [-0.777822971343994, 39.998294830322266], [-0.753561973571777, 40.046630859375], [-0.682878971099853, 40.044250488281364], [-0.627162992954254, 40.076225280761776], [-0.613529026508274, 40.07003784179682], [-0.628645002841949, 40.10212326049816], [-0.578427970409336, 40.1380844116212], [-0.544130027294045, 40.25168228149425], [-0.494459986686593, 40.22875595092779], [-0.383570998907089, 40.26486968994146], [-0.40013399720192, 40.295680999755916], [-0.280001014470997, 40.369518280029354], [-0.347303003072739, 40.443962097168026], [-0.271380990743637, 40.47852325439459], [-0.301809996366501, 40.51598739624029], [-0.29323598742485, 40.611064910888615], [-0.370431989431381, 40.613613128662166], [-0.378042012453079, 40.66743469238281], [-0.328770011663437, 40.6803016662597], [-0.306948989629632, 40.65951919555664], [-0.235943004488888, 40.69112777709972], [-0.223985999822617, 40.75418090820324], [-0.197126999497357, 40.78447723388683], [-0.164909005165043, 40.78865432739258], [-0.144484996795597, 40.78546524047857], [-0.125745996832848, 40.75286483764654], [-0.064652003347874, 40.7274284362793], [0.015783000737542, 40.72845077514654], [0.026483999565357, 40.69497299194347], [0.042220998555536, 40.6910285949707], [0.11254400014883, 40.72716140747082], [0.141390994191227, 40.71848678588867], [0.226156994700489, 40.733188629150376], [0.236028000712508, 40.702102661132926], [0.291882008314246, 40.68857574462902], [0.268305003642979, 40.65958023071295], [0.278872996568737, 40.63008117675781], [0.40200600028038, 40.60240554809576], [0.443987011909542, 40.57824707031256], [0.438008993864116, 40.547084808349666], [0.513471007347107, 40.51569366455084], [0.417915999889374, 40.4012489318847], [0.40708398818964, 40.35569381713867], [0.286803990602493, 40.25319290161144], [0.264026999473629, 40.20791625976574], [0.183749005198536, 40.163192749023494], [0.148194000124931, 40.08291625976568], [0.049304999411106, 40.03513717651372], [-0.005973000079393, 39.91458511352545], [-0.087917000055313, 39.855415344238395], [-0.182083994150105, 39.73347091674816], [-0.214304000139123, 39.6576385498048], [-0.21569499373436, 39.65486145019531], [-0.249861001968384, 39.625694274902344], [-0.316249996423721, 39.523471832275504], [-0.324028998613301, 39.471248626708984], [-0.309583991765919, 39.45013809204107], [-0.33041700720787, 39.46014022827159], [-0.320138007402306, 39.44402694702154], [-0.32708299159998, 39.441806793213004], [-0.331526994705143, 39.42597198486328], [-0.334306001663208, 39.423473358154354], [-0.288194000720978, 39.29763793945318], [-0.215973004698753, 39.186805725097656], [-0.240138992667141, 39.1743049621582], [-0.236806005239487, 39.1279182434082], [-0.159307003021183, 38.9937515258789], [-0.014862000010851, 38.87125015258795], [0.125695005059299, 38.84875106811529], [0.112640000879765, 38.84291839599609], [0.197916001081467, 38.80486297607433], [0.182639002800101, 38.79513931274414], [0.189304992556572, 38.773193359375114], [0.225416004657802, 38.764305114746094], [0.224583998322544, 38.74930572509771], [0.234861001372337, 38.73708343505865], [0.182639002800101, 38.7212486267091], [0.149581998586655, 38.67986297607427], [0.094584003090915, 38.66958236694336], [0.073195002973193, 38.64513778686535], [0.083192996680793, 38.63124847412115], [0.048195000737906, 38.641529083251896], [0.030972000211534, 38.62513732910162], [-0.028194999322238, 38.618751525878906], [-0.062360998243093, 38.5809707641601], [-0.048749998211861, 38.56319427490246], [-0.096528001129627, 38.523471832275334], [-0.147640004754066, 38.53680419921881], [-0.173192992806435, 38.515415191650504], [-0.316249996423721, 38.47486114501958], [-0.401250988244897, 38.412082672119084], [-0.402081996202469, 38.35263824462902], [-0.444862008094788, 38.363193511963004], [-0.479306012392044, 38.33680725097667], [-0.48263901472086, 38.34236145019525], [-0.506250023841858, 38.33263778686529], [-0.520971000194549, 38.289859771728516], [-0.510416984557992, 38.2009735107423], [-0.614582002162877, 38.17402648925787], [-0.644860982894897, 38.11125183105469], [-0.647360980510712, 37.99958419799805], [-0.665971994399968, 37.975692749023494], [-0.696807026863098, 37.96930694580078], [-0.719027996063232, 37.911529541015625], [-0.740693986415863, 37.90930557250971]]], [[[-1.248002052307072, 39.9950904846192], [-1.376796007156372, 40.01652526855474], [-1.420222997665405, 40.093536376953125], [-1.407534956932068, 40.101425170898494], [-1.457172036170959, 40.135078430175724], [-1.44879400730133, 40.14536285400402], [-1.357035994529667, 40.128910064697266], [-1.319659948348942, 40.1464195251466], [-1.32292902469635, 40.18487930297857], [-1.298166036605721, 40.21170806884777], [-1.284281015396118, 40.171520233154354], [-1.244235038757267, 40.14599227905284], [-1.244909048080444, 40.116165161132926], [-1.149737000465336, 40.11475753784191], [-1.072069048881474, 40.06050872802729], [-1.084169030189514, 40.036235809326165], [-1.191689014434814, 40.00155639648449], [-1.248002052307072, 39.9950904846192]]]]
+                    }
+                }
+            ]
+        };
+
+        colorArr = ["#e6e6e6", "#c8eef7", "#90e8ff", "#47dbff", "#00ccff", "#00a6e6", "#0080cc", "#0059b3", "#003399", "#2933ad", "#5233c2", "#7a33d6", "#a333eb", "#cc33ff", "#c229eb", "#b81fd6", "#ad14c2", "#a30aad", "#990099", "#b30073", "#cc004d", "#e60026", "#ff0000", "#d50000", "#aa0000", "#800000", "#550000", "#380f14", "#2b0000", "#000000", "#3c3c3c"];
+        precArr = [0, 1, 2, 5, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 110, 120, 130, 140, 150, 175, 200, 225, 250, 275, 300, 350, 400, 450, 500, 600, 700];
+        iValue = 'prec'; // Propiedad que se utilizará para interpolar
+        // Inicialización del mapa
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json', // URL del estilo del mapa
+            center: [-0.4030, 39.4531], // Coordenadas centradas en Valencia
+            zoom: 7,
+            bounds: turf.bbox(boundaries)
+        });
+
+        // Decodificar entidades HTML. Cambia caracteres html como &iacute; a í, etc.
+        function decodeHTMLEntities(text) {
+            const textArea = document.createElement('textarea');
+            textArea.innerHTML = text;
+            return textArea.value;
+        }
+
+
+
+        // Cargar el archivo GeoJSON y realizar la interpolación
+        map.on('load', async () => {
+            try {
+                // 1. Cargar el archivo GeoJSON (aquí se usa una URL de ejemplo)
+                const response = await fetch('https://terramapas.icv.gva.es/0508_AVAMET?request=GetFeature&service=WFS&version=2.0.0&typename=AVAMET.Estaciones&outputformat=geojson&SrsName=EPSG:4326');
+                const geojson = await response.json();
+
+
+                // Convertir los datos decodificando las propiedades necesarias
+                geojson.features.forEach(feature => {
+                    if (feature.properties && feature.properties.nom) {
+                        feature.properties.nom = decodeHTMLEntities(feature.properties.nom);
+                    }
+                });
+
+
+                // Calcula los valores de precipitación mínimos y máximos  
+                // Filtra los puntos que tienen el atributo "precipitación" no nulo
+                const precipitaciones = geojson.features
+                    .map(feature => feature.properties.prec)
+                    .filter(prec => prec !== null && prec !== undefined);
+
+                // Encuentra los valores mínimo y máximo de las precipitaciones
+                const minPrec = Math.min(...precipitaciones);
+                const maxPrec = Math.max(...precipitaciones);
+
+                console.log(`Precipitación mínima: ${minPrec}°C`);
+                console.log(`Precipitación máxima: ${maxPrec}°C`);
+
+
+
+                // Función para encontrar el índice al que pertenece un valor dentro del array de prec o colores
+                // Por ej. la prec 9.9 está en el intervalor entre 8 y 10º, es decir que le pertenece el índice 13 en el precArr
+                function findClosestIndex(arr, target) {
+                    for (let i = 0; i < arr.length - 1; i++) {
+                        if (arr[i] <= target && arr[i + 1] >= target) {
+                            return i;  // Retorna el índice del valor menor
+                        }
+                    }
+                    return -1; // Retorna -1 si no encuentra un intervalo válido
+                }
+
+                const indexPrecMin = findClosestIndex(precArr, minPrec);
+                const indexPrecMax = findClosestIndex(precArr, maxPrec);
+                console.log(indexPrecMin); // Esto imprimirá el índice correspondiente
+
+                const colorArrNew = colorArr.slice(indexPrecMin, indexPrecMax + 2);
+                const precArrNew = precArr.slice(indexPrecMin, indexPrecMax + 2);
+                console.log(colorArrNew);
+                console.log(precArr);
+
+
+                // 2. Crear la interpolación con Turf.js
+                var interpolate_options = {
+                    gridType: 'points',
+                    property: iValue,
+                    units: 'kilometers',
+                    weight: 10
+                };
+                const grid2 = turf.interpolate(geojson, 2, interpolate_options); // nota 2, es el grid de 2x2 km. Mejor 5
+                grid2.features.map((i) => (i.properties.prec = i.properties.prec.toFixed(2)));//devuelve PREC como texto, no número
+                // Nota. Es importante definir toFixed(2) para que haya decimales. Si lo ponemos a 0 (osea entero), no dejará que haya muchos breaks
+                //console.log(grid2);
+
+
+
+                // hexagonos
+                const grid = turf.interpolate(geojson, 5, { gridType: 'hex', property: iValue, units: 'kilometers', weight: 10 });
+                //console.log(grid);
+
+                // 3. Agregar capa de puntos originales al mapa
+                map.addSource('puntos', { type: 'geojson', data: geojson });
+
+                // capa comarcas
+                map.addSource('comarcas', {
+                    type: 'geojson',
+                    data: 'data/comarcas_cv.geojson'
+                });
+
+
+
+                // 4. Agregar la capa de interpolación al mapa (hexágonos)
+                map.addSource('interpolacion', { type: 'geojson', data: grid });
+                map.addLayer({
+                    id: 'interpolacion-layer',
+                    type: 'fill',
+                    source: 'interpolacion',
+                    layout: {
+                        "visibility": "none"
+                    },
+                    paint: {
+                        'fill-color': [
+                            'interpolate',
+                            ['linear'],
+                            ['get', 'valor'],
+                            0, '#3288bd',
+                            100, '#66c2a5',
+                            200, '#abdda4',
+                            300, '#e6f598',
+                            400, '#fee08b',
+                            500, '#fdae61',
+                            600, '#f46d43',
+                            700, '#d53e4f'
+                        ],
+                        'fill-opacity': 0.6
+                    }
+                });
+
+
+
+                // isobandas
+                var isobands_options = {
+                    zProperty: iValue,
+                    commonProperties: {
+                        "fill-opacity": 0.8
+                    },
+                    breaksProperties: [
+                        { fill: colorArr[0] },
+                        { fill: colorArr[1] },
+                        { fill: colorArr[2] },
+                        { fill: colorArr[3] },
+                        { fill: colorArr[4] },
+                        { fill: colorArr[5] },
+                        { fill: colorArr[6] },
+                        { fill: colorArr[7] },
+                        { fill: colorArr[8] },
+                        { fill: colorArr[9] },
+                        { fill: colorArr[10] },
+                        { fill: colorArr[11] },
+                        { fill: colorArr[12] },
+                        { fill: colorArr[13] },
+                        { fill: colorArr[14] },
+                        { fill: colorArr[15] },
+                        { fill: colorArr[16] },
+                        { fill: colorArr[17] },
+                        { fill: colorArr[18] },
+                        { fill: colorArr[19] },
+                        { fill: colorArr[20] },
+                        { fill: colorArr[21] },
+                        { fill: colorArr[22] },
+                        { fill: colorArr[23] },
+                        { fill: colorArr[24] },
+                        { fill: colorArr[25] },
+                        { fill: colorArr[26] },
+                        { fill: colorArr[27] },
+                        { fill: colorArr[28] },
+                        { fill: colorArr[29] },
+                        { fill: colorArr[30] }
+                        //,{ fill: colorArr[31] }
+                    ].slice(indexPrecMin, indexPrecMax + 2)
+                };
+
+                let isobands = turf.isobands(grid2, precArrNew, isobands_options);
+                boundaries = turf.flatten(boundaries);
+                isobands = turf.flatten(isobands);
+
+                let features = [];
+
+                isobands.features.forEach(function (layer1) {
+
+                    boundaries.features.forEach(function (layer2) {
+                        let intersection = null;
+                        try {
+                            intersection = turf.intersect(layer1, layer2);
+                        } catch (e) {
+                            layer1 = turf.buffer(layer1, 0);
+                            intersection = turf.intersect(layer1, layer2);
+                        }
+                        if (intersection != null) {
+                            intersection.properties = layer1.properties;
+                            intersection.id = Math.random() * 100000;
+                            features.push(intersection);
+                        }
+                    });
+                });
+                let intersection = turf.featureCollection(features);
+                //console.log(intersection);
+
+
+
+                //console.log(isobands);
+                map.addSource("isobands", {
+                    type: "geojson",
+                    data: isobands
+                });
+                map.addLayer({
+                    id: "isobands",
+                    type: "fill",
+                    source: "isobands",
+                    layout: {
+                        "visibility": "none"
+                    },
+                    paint: {
+                        "fill-color": ["get", "fill"],
+                        "fill-opacity": 0.8
+                    }
+                })
+
+
+                // capa con el grid2 (puntos en forma de grid)
+                map.addSource("grid2", {
+                    type: 'geojson',
+                    data: grid2
+                });
+                map.addLayer({
+                    id: 'grid2',
+                    type: 'symbol',
+                    source: 'grid2',
+                    layout: {
+                        'text-field': ['get', iValue],
+                        'visibility': 'none'
+                    },
+                    paint: {
+                        'text-color': '#f00'
+                    }
+                });
+
+                // intersection
+                map.addSource("intersection", {
+                    type: "geojson",
+                    data: intersection
+                });
+                map.addLayer({
+                    id: "intersection",
+                    type: "fill",
+                    source: "intersection",
+                    layout: {},
+                    paint: {
+                        "fill-color": ["get", "fill"]
+                    }
+                });
+
+
+                map.addLayer({
+                    id: 'puntos-layer',
+                    type: 'circle',
+                    source: 'puntos',
+                    paint: {
+                        'circle-radius': 3,
+                        'circle-color': '#d6eaf8',
+                        'circle-stroke-width':1,
+                        'circle-stroke-color':'#3498db'
+                    }
+                });
+
+                /// Añadir una capa de etiquetas
+                map.addLayer({
+                    'id': 'pois_label',
+                    'type': 'symbol',
+                    'source': 'puntos',
+                    'minzoom': 10,
+                    'layout': {
+                        'text-field': ['concat', ['get', 'nom'], '\n', ['get', iValue]],
+                        //'text-field': ['get', 'PREC'],
+                        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+                        //'text-offset': [0, 1.25],
+                        'text-offset': [0, 1],
+                        'text-anchor': 'top'
+                        //'text-color': 'red'
+                    },
+                    'paint': {
+                        'text-color': '#000000',
+                        'text-halo-color': 'white',
+                        'text-halo-width': 2
+                    }
+                });
+                // Comarcas
+                map.addLayer({
+                    id: 'comarcas',
+                    type: 'line',
+                    source: 'comarcas',
+                    paint: {
+                        'line-color': '#ffffff', // Color del borde
+                        'line-width': 2          // Grosor del borde
+                    }
+                });
+
+                // Evento click
+                map.on('click', 'pois_label', (e) => {
+                    /*
+                            "id": "25458153",
+                            "tipus": "AVAMET",
+                            "codi": "c01m091e01",
+                            "altitud": "1074",
+                            "nom": "Portell de Morella",
+                            "urlmxo": "http://www.avamet.org/mxo_i.php?id=c01m091e01",
+                            "webcam": "https://www.avamet.es/estacions/public_html/portell/webcam.jpg",
+                            "actualitzacio": "2024-12-18 08:55:00+01",
+                            "temp": "9",
+                            "hrel": "74",
+                            "vent_vel": "0",
+                            "vent_dir": "360",
+                            "vent_dir_360": "90",
+                            "vent_max": "16.1",
+                            "pres": "1030.5",
+                            "prec": "0"
+                    */
+                    const feature = e.features[0];
+                    var enlace = '';
+                    if (feature.properties.urlmxo == null) { enlace = ''; } else { enlace = '<a class="w3-button  w3-teal" href="' + feature.properties.urlmxo + '" target="_blank">Enlace AVAMET</a>'; }
+                    var foto = '';
+                    if (feature.properties.webcam == '') { foto = '<img src="img/no_webcam.jpg" alt="webcam" style="width: 100%;">'; } else { foto = '<img src="' + feature.properties.webcam + '" alt="webcam" style="width: 100%;">'; }
+                    
+
+
+                    const sidebar = document.getElementById('sidebar');
+                    const sidebarTitle = document.getElementById('sidebar-title');
+                    sidebarTitle.innerHTML = `
+                            <h3>${feature.properties.nom}</h3>                    
+                        `;
+                    const sidebarContent = document.getElementById('sidebar-content');
+                    sidebarContent.innerHTML = `
+                            <br>${foto}                  
+                            <p><b>Precipitacion:</b> ${feature.properties.temp}</p>
+                            <p><b>Precipitación:</b> ${feature.properties.prec}</p>
+                            <p><b>Presión:</b> ${feature.properties.pres}</p>
+                            <p><b>Altitud:</b> ${feature.properties.altitud}</p>
+                            <p><b>Humedad relativa:</b> ${feature.properties.hrel}</p>
+                            <p><b>Viento (velocidad):</b> ${feature.properties.vent_vel}</p>
+                            <p><b>Viento (dirección):</b> ${feature.properties.vent_dir}</p>
+                            <p><b>Viento (dirección 360º) 2:</b> ${feature.properties.vent_dir_360}</p>
+                            <p><b>Viento (máximo) 2:</b> ${feature.properties.vent_max}</p>
+                            <p align="center">${enlace}</p>
+                        `;
+                    sidebar.classList.add('open');
+                });
+
+                // Cambia el cursor a una mano cuando el ratón pasa por encima de los puntos
+                map.on('mouseenter', 'pois_label', () => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+                // Cambia el cursor de nuevo cuando el ratón deja de estar sobre los puntos
+                map.on('mouseleave', 'pois_label', () => {
+                    map.getCanvas().style.cursor = '';
+                });
+
+                // fin evento click
+
+
+                // LEYENDA
+                const colors = colorArrNew;
+
+                const levels = precArrNew;
+
+                const legendItems = document.getElementById('legend-items');
+
+                levels.forEach((level, index) => {
+                    const color = colors[index];
+                    const item = document.createElement('div');
+                    item.style.display = 'flex';
+                    item.style.alignItems = 'center';
+
+                    const colorBox = document.createElement('span');
+                    colorBox.style.width = '20px';
+                    colorBox.style.height = '20px';
+                    colorBox.style.backgroundColor = color;
+                    colorBox.style.marginRight = '8px';
+
+                    const label = document.createElement('span');
+                    label.innerText = `${level} mm`;
+
+                    item.appendChild(colorBox);
+                    item.appendChild(label);
+                    legendItems.appendChild(item);
+                });
+
+
+
+            } catch (error) {
+                console.error('Error al cargar o procesar el GeoJSON:', error);
+            }
+        });
+        
+    </script>
+</body>
+
+</html>
