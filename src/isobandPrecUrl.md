@@ -27,7 +27,7 @@ Los datos obtenidos por cada observatorio son:
 
 Los procesos realizados con Turf.js son:
 
-1. Cargar el archivo GeoJSON (aquí se usa una URL de ejemplo)
+1. Cargar el archivo GeoJSON
 2. Crear la interpolación con Turf.js
 3. Crea un grid de 2x2 km
 4. Crear una malla de hexágonos
