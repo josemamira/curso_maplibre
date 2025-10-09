@@ -24,5 +24,5 @@ Código fuente de los mapas realizados con Maplibre
 19. Mapa de isoyetas (DANA Valencia 29 oct 2024): : [Explicación](isoband.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
 20. Mapa de isotermas (13 nov 2024): : [Explicación](isobandt.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandt.html)
 21. Mapa de isoyetas (13 nov 2024): : [Explicación](isobandp.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandp.html)
-22. Mapa de precipitación en tiempo real): : [Explicación](isobandPrecUrl.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandPreUrl.html)
+22. Mapa de precipitación en tiempo real): : [Explicación](isobandPrecUrl.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandPrecUrl.html)
 23. Mapa de temperaturas en tiempo real): : [Explicación](isotest.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobtest.html)
