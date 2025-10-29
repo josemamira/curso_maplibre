@@ -6,7 +6,7 @@ El dato de partida es un archivo GeoJSON descargado de AVAMET y editado para est
 ## DATOS
 
 - GeoJSON: [dato geojson](https://github.com/josemamira/curso_maplibre/blob/main/src/data/dana_2024_10_29.geojson)
-- Comarcas: [comarcas](https://github.com/josemamira/curso_maplibre/blob/main/src/data/data/comarcas_cv.geojson)
+- Comarcas: [comarcas](https://github.com/josemamira/curso_maplibre/blob/main/src/data/comarcas_cv.geojson)
 
 ## PROCESOS
 
