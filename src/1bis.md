@@ -76,6 +76,11 @@ Lo que le estamos indicando es que vamos a declarar un objeto llamado "map", que
 - **center**: coordenadas del centro del mapa. Primero la longitud y luego la latitud
 - **zoom**: Se refiere al nivel de zoom. A cada nivel de zoom le corresponden unas determinadas teselas vectoriales. Para más información puedes consultar este [enlace](https://learn.microsoft.com/es-es/azure/azure-maps/zoom-levels-and-tile-grid?tabs=csharp).
 
+### Fichero de estilo (style_paises.json)
+Es el fichero principal de simbolización, y buscando una analogía es como el fichero de proyecto de Qgis. En él se indican los orígenes de datos (sources), las fuentes de texto (glyphs) y la simbolización de cada capa (layers). Puedes ver su contenido en este enlace:
+[Enlace a style para Maplibre](https://github.com/josemamira/curso_maplibre/blob/main/src/data/style_paises.json)
+
+
 ### Resultado
 Sí queremos ponerlo todo en un documento, sería así:
 ```html
