@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Acceso a funciones de Maplibre</title>
   <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
-  <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet" />
+  <link href="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.css" rel="stylesheet" />
   <style>
     #map {
       width: 100%;
@@ -39,7 +39,8 @@
     <button id="btn-add-geojson-points">Añadir GeoJson puntos</button>
     <button id="btn-add-geojson-lines">Añadir GeoJson líneas</button>
   </div>
-
+  
+  <script src="https://unpkg.com/maplibre-gl@1.15.2/dist/maplibre-gl.js"></script>
   <script>
     // Inicialización del mapa
     const map = new maplibregl.Map({
