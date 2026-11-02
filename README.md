@@ -14,7 +14,7 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 [Curso HTML básico](https://github.com/josemamira/curso_maplibre/blob/main/src/curso_html.md)
 
 # Índice
-
+0. Fundamentos de Maplibre: Estructura básica de un mapa (offline): [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/1bis.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/1bis.html)
 1. Fundamentos de Maplibre: Estructura básica de un mapa: [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/1.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/1.html)
 2. Escala y zoom: [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/2.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/2.html)
 3. Cambio de fondo: [Explicación](https://github.com/josemamira/curso_maplibre/blob/main/src/3.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/3.html)
