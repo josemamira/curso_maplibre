@@ -6,14 +6,15 @@
     20
   ],
   "zoom": 1.4,
+  "glyphs": "./data/fonts/{fontstack}/{range}.pbf",
   "sources": {
     "countries": {
       "type": "geojson",
-      "data": "./paises.geojson"
+      "data": "./data/paises.geojson"
     },
     "country-labels": {
       "type": "geojson",
-      "data": "./etiquetas_paises.geojson"
+      "data": "./data/etiquetas_paises.geojson"
     }
   },
   "layers": [
@@ -84,10 +85,7 @@
             "name"
           ]
         ],
-        "text-font": [
-          "Open Sans Regular",
-          "Arial Unicode MS Regular"
-        ],
+        "text-font": ["Open Sans Regular"],
         "text-size": [
           "interpolate",
           [
