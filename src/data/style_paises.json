@@ -1,6 +1,6 @@
 {
   "version": 8,
-  "name": "Países del mundo · gris claro · etiquetas por zoom",
+  "name": "Países del mundo - demo básica",
   "center": [
     0,
     20
@@ -15,6 +15,10 @@
     "country-labels": {
       "type": "geojson",
       "data": "./data/etiquetas_paises.geojson"
+    },
+    "costa": {
+      "type": "geojson",
+      "data": "./data/paises_costa.geojson"
     }
   },
   "layers": [
@@ -25,6 +29,40 @@
         "background-color": "#CFE8F3"
       }
     },
+
+
+    {
+      "id": "coast-glow-outer",
+      "type": "line",
+      "source": "costa",
+      "paint": {
+        "line-color": "#559DC7",
+        "line-width": 20,
+        "line-opacity": 0.08
+      }
+    },
+    {
+      "id": "coast-glow-middle",
+      "type": "line",
+      "source": "costa",
+      "paint": {
+        "line-color": "#559DC7",
+        "line-width": 12,
+        "line-opacity": 0.16
+      }
+    },
+    {
+      "id": "coast-glow-inner",
+      "type": "line",
+      "source": "costa",
+      "paint": {
+        "line-color": "#559DC7",
+        "line-width": 5,
+        "line-opacity": 0.28
+      }
+    },
+
+
     {
       "id": "country-fill",
       "type": "fill",
