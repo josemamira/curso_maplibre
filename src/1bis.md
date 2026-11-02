@@ -83,7 +83,7 @@ Es el fichero principal de simbolización, y buscando una analogía es como el f
 Enlace a cada capa:
 
 - [Capa geojson de polígonos con los países](https://github.com/josemamira/curso_maplibre/blob/main/src/data/paises.geojson)
-- [Capa geojson de puntos con las etiquetas](https://github.com/josemamira/curso_maplibre/blob/main/src/data/paises_etiquetas.geojson)
+- [Capa geojson de puntos con las etiquetas](https://github.com/josemamira/curso_maplibre/blob/main/src/data/etiquetas_paises.geojson)
   
 ### Resultado
 Sí queremos ponerlo todo en un documento, sería así:
