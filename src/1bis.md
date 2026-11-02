@@ -80,7 +80,9 @@ Lo que le estamos indicando es que vamos a declarar un objeto llamado "map", que
 Es el fichero principal de simbolización, y buscando una analogía es como el fichero de proyecto de Qgis. En él se indican los orígenes de datos (sources), las fuentes de texto (glyphs) y la simbolización de cada capa (layers). Puedes ver su contenido en este enlace:
 [Enlace a style para Maplibre](https://github.com/josemamira/curso_maplibre/blob/main/src/data/style_paises.json)
 
-
+Enlace a cada capa:
+[Capa geojson de polígonos con los países](https://github.com/josemamira/curso_maplibre/blob/main/src/data/paises.geojson)
+[Capa geojson de puntos con las etiquetas](https://github.com/josemamira/curso_maplibre/blob/main/src/data/paises_etiquetas.geojson)
 ### Resultado
 Sí queremos ponerlo todo en un documento, sería así:
 ```html
