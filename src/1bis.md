@@ -108,7 +108,7 @@ Sí queremos ponerlo todo en un documento, sería así:
     <script>
         var map = new maplibregl.Map({
             container: 'map', // container id
-            style: 'https://demotiles.maplibre.org/style.json', // style URL
+            style: 'data/style_paises.json', // style URL
             center: [0, 0], // starting position [lng, lat]
             zoom: 1 // starting zoom
         });
