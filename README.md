@@ -37,7 +37,7 @@ Para poder entender este curso debes de tener algunas nociones básicas sobre HT
 20. Isoyetas con la precipitación (DANA Valencia 29-oct-2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isoband.html)
 21. Isopletas con la temperatura: [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandt.html)
 22. Isoyetas con la precipitación (13 nov 2024): [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandp.html)
-23. Temperaturas en tiempo real: [Resultado](https://josemamira.github.io/curso_maplibre/src/isotest.html)
+23. Temperaturas en tiempo real: [Explicación](src/23.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isotest.html)
 24. Precipitaciones en tiempo real:[Explicación](src/24.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/isobandPrecUrl.html)
 25. Funciones Maplibre: [Explicación](src/25.md) [Resultado](https://josemamira.github.io/curso_maplibre/src/controles.html)
 
