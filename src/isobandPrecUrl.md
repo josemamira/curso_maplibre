@@ -1,3 +1,6 @@
+# NOTA:
+AVAMET ya no proporciona en su GeoJSON datos de los observatorios. Sólo la ubicación y el nombre. Por esta razón no funciona esta utilidad de mapa
+
 # Precipitación en tiempo real
 
 Este HTML invoca al API de AVAMET para obtener un GeoJSON con los datos de los observatorios (puntos) y selecciona los de precipitación.
